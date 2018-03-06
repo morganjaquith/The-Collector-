@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Enemy AI by: Michael Frye
+/// 
+/// </summary>
+
 public class Enemy : MonoBehaviour {
 
     [Header("Acceleration Preferences")]
@@ -15,11 +20,13 @@ public class Enemy : MonoBehaviour {
     [Header("Waypoint Preferences")]
     public float waypointWaitTime = 2f;
     public float waypointFollowDistanceLimit = 2f;
+    public bool goToRandomWaypoint = false;
 
     private float startingSpeed;
     private float speedStartTime;
     private float fadeTime;
     private float startWaitTime;
+    private int waypointIndexCount;
     private GameObject player;
     private GameObject[] waypoints;
     private NavMeshAgent NavAgent;
@@ -45,7 +52,7 @@ public class Enemy : MonoBehaviour {
             //If the player is far from the enemy pick a random waypoint and forget about the player
             if (NavAgent.remainingDistance >= playerFollowDistanceLimit)
             {
-                NavAgent.destination = waypoints[GetRandomWaypointIndex()].transform.position;
+                NavAgent.destination = waypoints[GetWaypointIndex()].transform.position;
                 player = null;
             }
             //If acceleration has been boosted, fade it out
@@ -69,7 +76,7 @@ public class Enemy : MonoBehaviour {
 
                     if(waypointWaitTime <= 0)
                     {
-                        NavAgent.destination = waypoints[GetRandomWaypointIndex()].transform.position;
+                        NavAgent.destination = waypoints[GetWaypointIndex()].transform.position;
                         waypointWaitTime = startWaitTime;
                         NavAgent.isStopped = false;
                     }
@@ -107,17 +114,30 @@ public class Enemy : MonoBehaviour {
         if(collision.transform.tag == "Player")
         {
             //player.getcomponent<Player>().ApplyDamage()
-            //player drops item
-
-            //If player isn't meant to be one shotted
-                //Player gets pushed a little bit
-                //Enemy stops for a bit
-                //Continues to follow
+            //player = null;
         }
     }
 
-    private int GetRandomWaypointIndex()
+    /// <summary>
+    /// Returns an int representing a specific waypoint index
+    /// Returns a random index if goToRandomWaypoint is true,
+    /// else it'll increment through each waypoint instead
+    /// </summary>
+    /// <returns></returns>
+    private int GetWaypointIndex()
     {
-        return Random.Range(0, waypoints.Length);
+        if (goToRandomWaypoint)
+        {
+            return Random.Range(0, waypoints.Length);
+        }
+        else
+        {
+            if(waypointIndexCount >= waypoints.Length)
+            {
+                waypointIndexCount = 0;
+            }
+
+            return waypointIndexCount++;
+        }
     }
 }
