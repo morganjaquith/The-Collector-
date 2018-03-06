@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 8
-    y: 51
-    width: 1903
-    height: 981
+    x: 0
+    y: 43
+    width: 1500
+    height: 917
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
@@ -41,8 +41,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1903
     height: 981
+=======
+    width: 1500
+    height: 917
+>>>>>>> origin/Caio'sMazeBranch
   m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
@@ -61,7 +66,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1903
+    width: 1500
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -81,8 +86,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 961
-    width: 1903
+    y: 897
+    width: 1500
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -104,8 +109,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 1903
-    height: 931
+    width: 1500
+    height: 867
   m_MinSize: {x: 583, y: 492}
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 1
@@ -129,8 +134,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1903
-    height: 552
+    width: 1500
+    height: 514
   m_MinSize: {x: 583, y: 221}
   m_MaxSize: {x: 12008, y: 4021}
   vertical: 0
@@ -151,8 +156,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 346
-    height: 552
+    width: 356
+    height: 514
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
@@ -174,10 +179,15 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 346
+    x: 356
     y: 0
+<<<<<<< HEAD
     width: 713
     height: 552
+=======
+    width: 659
+    height: 514
+>>>>>>> origin/Caio'sMazeBranch
   m_MinSize: {x: 204, y: 221}
   m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 16}
@@ -200,10 +210,17 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1059
     y: 0
     width: 844
     height: 552
+=======
+    x: 1015
+    y: 0
+    width: 485
+    height: 514
+>>>>>>> origin/Caio'sMazeBranch
   m_MinSize: {x: 277, y: 71}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 17}
@@ -232,13 +249,17 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 552
-    width: 1903
-    height: 379
+    y: 514
+    width: 1500
+    height: 353
   m_MinSize: {x: 538, y: 271}
   m_MaxSize: {x: 18008, y: 10021}
   vertical: 0
+<<<<<<< HEAD
   controlID: 148
+=======
+  controlID: 125
+>>>>>>> origin/Caio'sMazeBranch
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -255,8 +276,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1222
-    height: 379
+    width: 920
+    height: 353
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 21}
@@ -281,10 +302,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1222
+    x: 920
     y: 0
     width: 204
-    height: 379
+    height: 353
   m_MinSize: {x: 204, y: 221}
   m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 25}
@@ -306,10 +327,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1426
+    x: 1124
     y: 0
-    width: 477
-    height: 379
+    width: 376
+    height: 353
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
   m_ActualView: {fileID: 26}
@@ -339,23 +360,30 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 8
     y: 100
     width: 344
     height: 531
+=======
+    x: 0
+    y: 92
+    width: 354
+    height: 493
+>>>>>>> origin/Caio'sMazeBranch
   m_PersistentViewDataDictionary: {fileID: 0}
   m_MaximizeOnPlay: 0
   m_Gizmos: 0
   m_Stats: 0
-  m_SelectedSizes: 09000000020000000000000000000000000000000000000000000000000000000000000000000000
+  m_SelectedSizes: 06000000020000000000000000000000000000000000000000000000000000000000000000000000
   m_TargetDisplay: 0
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
-    m_HBaseRangeMin: -960
-    m_HBaseRangeMax: 960
-    m_VBaseRangeMin: -600
-    m_VBaseRangeMax: 600
+    m_HBaseRangeMin: -512
+    m_HBaseRangeMax: 512
+    m_VBaseRangeMin: -384
+    m_VBaseRangeMax: 384
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -372,25 +400,25 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 17
-      width: 344
-      height: 514
-    m_Scale: {x: 0.17916666, y: 0.17916666}
-    m_Translation: {x: 172, y: 257}
+      width: 354
+      height: 476
+    m_Scale: {x: 0.34570312, y: 0.34570312}
+    m_Translation: {x: 177, y: 238}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -960.00006
-      y: -1434.4187
-      width: 1920.0001
-      height: 2868.8374
+      x: -512
+      y: -688.45197
+      width: 1024
+      height: 1376.9039
     m_MinimalGUI: 1
-  m_defaultScale: 0.17916666
+  m_defaultScale: 0.34570312
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
-  m_LastWindowPixelSize: {x: 344, y: 531}
+  m_LastWindowPixelSize: {x: 354, y: 493}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000100000100
@@ -443,20 +471,33 @@ MonoBehaviour:
   m_DepthBufferBits: 32
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 356
     y: 100
     width: 709
     height: 531
+=======
+    x: 358
+    y: 92
+    width: 655
+    height: 493
+>>>>>>> origin/Caio'sMazeBranch
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 91.98598731093114
+  lastFramingTime: 929.4503903386217
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: -3.5226896, y: 5.4958944, z: -36.20811}
     speed: 2
     m_Value: {x: -3.5226896, y: 5.4958944, z: -36.20811}
+=======
+    m_Target: {x: 438.85138, y: -1327.9586, z: -321.17163}
+    speed: 2
+    m_Value: {x: 438.85138, y: -1327.9586, z: -321.17163}
+>>>>>>> origin/Caio'sMazeBranch
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -480,6 +521,7 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
+<<<<<<< HEAD
     m_Target: {x: -0.20712456, y: 0.04019994, z: -0.008517461, w: -0.9774512}
     speed: 2
     m_Value: {x: -0.20712456, y: 0.04019994, z: -0.008517461, w: -0.9774512}
@@ -487,6 +529,15 @@ MonoBehaviour:
     m_Target: 6.5465336
     speed: 2
     m_Value: 6.5465336
+=======
+    m_Target: {x: 0.25744626, y: 0.73694915, z: -0.49163073, w: 0.38591012}
+    speed: 2
+    m_Value: {x: 0.25744626, y: 0.73694915, z: -0.49163073, w: 0.38591012}
+  m_Size:
+    m_Target: 1497.8888
+    speed: 2
+    m_Value: 1497.8888
+>>>>>>> origin/Caio'sMazeBranch
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -520,10 +571,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1069
     y: 100
     width: 842
     height: 531
+=======
+    x: 1017
+    y: 92
+    width: 483
+    height: 493
+>>>>>>> origin/Caio'sMazeBranch
   m_PersistentViewDataDictionary: {fileID: 0}
   m_ScrollPosition: {x: 0, y: 0}
   m_InspectorMode: 0
@@ -583,8 +641,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 1298
     y: 100
+<<<<<<< HEAD
     width: 613
     height: 531
+=======
+    width: 456
+    height: 596
+>>>>>>> origin/Caio'sMazeBranch
   m_PersistentViewDataDictionary: {fileID: 0}
 --- !u!114 &20
 MonoBehaviour:
@@ -646,10 +709,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 8
     y: 652
     width: 1220
     height: 358
+=======
+    x: 0
+    y: 606
+    width: 918
+    height: 332
+>>>>>>> origin/Caio'sMazeBranch
   m_PersistentViewDataDictionary: {fileID: 0}
 --- !u!114 &22
 MonoBehaviour:
@@ -784,9 +854,10 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 1232
-    y: 652
+    x: 922
+    y: 606
     width: 200
+<<<<<<< HEAD
     height: 358
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
@@ -794,6 +865,15 @@ MonoBehaviour:
     m_SelectedIDs: a4280000
     m_LastClickedID: 0
     m_ExpandedIDs: 9efbffff000000000a28000020280000
+=======
+    height: 332
+  m_PersistentViewDataDictionary: {fileID: 0}
+  m_TreeViewState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 6cfbffff86fbffff00000000
+>>>>>>> origin/Caio'sMazeBranch
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -838,10 +918,17 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1436
     y: 652
     width: 475
     height: 358
+=======
+    x: 1126
+    y: 606
+    width: 374
+    height: 332
+>>>>>>> origin/Caio'sMazeBranch
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -855,10 +942,15 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
+<<<<<<< HEAD
     - Assets/Scripts
+=======
+    - Assets
+>>>>>>> origin/Caio'sMazeBranch
   m_ViewMode: 1
-  m_StartGridSize: 16
+  m_StartGridSize: 51
   m_LastFolders:
+<<<<<<< HEAD
   - Assets/Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Mike\Documents\Projects\CS114\The Collector
@@ -868,6 +960,17 @@ MonoBehaviour:
     m_SelectedIDs: be300000
     m_LastClickedID: 12478
     m_ExpandedIDs: 000000007a27000000ca9a3bffffff7f
+=======
+  - Assets
+  m_LastFoldersGridSize: 51
+  m_LastProjectPath: C:\Users\Caio Prado\Documents\The-Collector-\The Collector
+  m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 76270000
+    m_LastClickedID: 10102
+    m_ExpandedIDs: 000000007627000000ca9a3bffffff7f
+>>>>>>> origin/Caio'sMazeBranch
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -895,7 +998,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 000000007a270000
+=======
+    m_ExpandedIDs: 0000000076270000
+>>>>>>> origin/Caio'sMazeBranch
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -948,5 +1055,5 @@ MonoBehaviour:
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
     m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 16
+    m_GridSize: 51
   m_DirectoriesAreaWidth: 217
