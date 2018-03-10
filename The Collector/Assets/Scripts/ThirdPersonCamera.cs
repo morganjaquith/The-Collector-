@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour {
@@ -21,8 +20,8 @@ public class ThirdPersonCamera : MonoBehaviour {
     [Header("Other")]
     public Transform playerMesh;
 
+    private bool dead;
     private Quaternion Xrotation,Yrotation;
-
     private float currentX, currentY;
 
     private void Start()
@@ -45,13 +44,23 @@ public class ThirdPersonCamera : MonoBehaviour {
 
     private void LateUpdate()
     {
-        Vector3 dir = new Vector3(0,0,-distance);
+        Vector3 dir = new Vector3(0, 0, -distance);
+
         Yrotation = Quaternion.Euler(currentY, currentX, 0);
-        Xrotation = Quaternion.Euler(0,currentX, 0);
+        Xrotation = Quaternion.Euler(0, currentX, 0);
+
         transform.position = target.position + Yrotation * dir;
-        //The player will automatically stop for that rotational movement
-        playerMesh.rotation = Xrotation;
+
+        if (!dead)
+        { 
+            playerMesh.rotation = Xrotation;
+        }
+
         transform.LookAt(target.position);
     }
 
+    public void PlayerIsDead()
+    {
+        dead = true;
+    }
 }

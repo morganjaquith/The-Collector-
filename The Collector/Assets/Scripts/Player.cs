@@ -1,41 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    [Header("Player Preferences")]
     public float movementSensitivity = 0.5f;
+    public float deathDuration = 3f;
 
 	public Transform itemDestination;
 
-    public float deadDuration = 3f;
-
-    private bool dead;
     public bool dontDie;
+
+    [Header("Debug")]
+
+    public bool dead;
     public bool holdingItem;
 
     private float xInput;
     private float zInput;
-    private float deathStartTime;
-    private float destroyTime;
+    public float deathStartTime;
     private float originalMovementSpeed;
 
     private Rigidbody rig;
     private Transform cameraObject;
+    public GameObject pauseMenu;
     private GameObject item;
 
     private Vector3 forwardMovement;
     private Vector3 sideWaysMovement;
 
-    private void Start()
+    private void Start ()
     {
+        pauseMenu = GameObject.Find("Canvas");
+        pauseMenu.SetActive(false);
+        deathStartTime = deathDuration;
         rig = GetComponent<Rigidbody>();
         originalMovementSpeed = movementSensitivity;
         cameraObject = transform.GetChild(0);
     }
 
     // Update is called once per frame
-    void Update () 
+    void FixedUpdate () 
 	{
         if (!dead)
         {
@@ -64,13 +68,18 @@ public class Player : MonoBehaviour {
 
                 holdingItem = false;
             }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                pauseMenu.SetActive(true);
+                pauseMenu.GetComponent<MenuOptions>().PauseObjects();
+            }
         }
         else
         {
 
-            destroyTime = (Time.time - deathStartTime) / deadDuration;
+            deathStartTime -= Time.deltaTime;
 
-            if(destroyTime <= 0)
+            if(deathStartTime <= 0)
             {
                 Destroy(this.gameObject);
             }
@@ -78,7 +87,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter (Collision collision)
     {
         //if we collided with object tagged "item" && !holdingItem
         if(collision.transform.tag == "item" && !holdingItem)
@@ -97,19 +106,23 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void ApplyDamage()
+    public void ApplyDamage ()
     {
         if (!dontDie)
         {
+
+            cameraObject.GetComponent<ThirdPersonCamera>().PlayerIsDead();
+
+            if(holdingItem)
+            {
+                //drop it  
+            }
+            
+            rig.constraints = RigidbodyConstraints.None;
+
             dead = true;
 
             Debug.Log("You're dead");
-
-            deathStartTime = Time.time;
-
-            //if (holdingItem) {  //drop it  }
-            
-            rig.constraints = RigidbodyConstraints.None;
 
         }
 	}

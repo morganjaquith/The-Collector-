@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4606263602492496}
   - component: {fileID: 20481370340906376}
-  - component: {fileID: 114385975743795114}
   - component: {fileID: 124206755148542686}
   - component: {fileID: 81082749211976326}
+  - component: {fileID: 114385975743795114}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114498031812658024}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +104,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4712053446085386}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4606263602492496
 Transform:
@@ -117,7 +117,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4712053446085386}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
 --- !u!4 &4712053446085386
 Transform:
@@ -126,11 +126,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675534078077644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.95, y: -4.183, z: -12.58}
+  m_LocalPosition: {x: -13.44, y: -4.183, z: -12.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4493713019914868}
   - {fileID: 4606263602492496}
+  - {fileID: 4493713019914868}
   - {fileID: 4123352906663526}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -225,7 +225,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!81 &81082749211976326
 AudioListener:
@@ -247,8 +247,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 4712053446085386}
   distance: 10
-  maxYAngle: 50
-  minYAngle: 0
+  maxYAngle: 60
+  minYAngle: 30
   sensitivityX: 4
   sensitivityY: 1
   playerMesh: {fileID: 4493713019914868}
@@ -263,11 +263,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e1ea2c86cfa2943bd5993a85b831a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSensitivity: 0.5
+  movementSensitivity: 5
+  deathDuration: 5.5
   itemDestination: {fileID: 4123352906663526}
-  deadDuration: 3
   dontDie: 0
+  dead: 0
   holdingItem: 0
+  deathStartTime: 0
+  pauseMenu: {fileID: 0}
 --- !u!124 &124206755148542686
 Behaviour:
   m_ObjectHideFlags: 1

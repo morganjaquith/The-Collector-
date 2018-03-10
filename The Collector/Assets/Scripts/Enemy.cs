@@ -1,10 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
+/// 
 /// Enemy AI by: Michael Frye
+/// 
+/// On Start the AI will grab all objects tagged "Waypoint" in the scene
+/// 
+/// It'll select a waypoint and go to it if player == null
+/// 
+/// If the player enters the enemy's trigger (OnTriggerEnter), the enemy will get a boost of speed that'll decrease over time
+/// If the enemy touches the player (OnCollisionEnter), the enemy will kill the player
+/// 
+/// If the player gets far enough from the AI, it'll stop persueing the player and player will equal null
 /// 
 /// </summary>
 
@@ -45,7 +53,7 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
 
         stopped = NavAgent.isStopped;
@@ -127,6 +135,9 @@ public class Enemy : MonoBehaviour {
     {
         if(collision.transform.tag == "Player")
         {
+            //If there's a problem with collisionEntering when on the otherside of the wall, use a raycast in here to check if the enemy can see the player
+
+            NavAgent.speed = startingSpeed;
             collision.transform.GetComponent<Player>().ApplyDamage();
             player = null;
         }
