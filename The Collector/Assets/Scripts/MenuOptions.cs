@@ -6,6 +6,8 @@ public class MenuOptions : MonoBehaviour {
     private GameObject player;
     private GameObject[] enemys;
 
+    // -----  Functions for Main Menu / Pause Menu UI  ------
+
     public void LoadLevel(string levelName)
     {
         SceneManager.LoadScene(levelName);
@@ -26,6 +28,9 @@ public class MenuOptions : MonoBehaviour {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Finds player/enemy objects and calls functions in order to 'pause' the game
+    /// </summary>
     public void PauseObjects()
     {
         if (player == null || enemys == null)
@@ -42,6 +47,9 @@ public class MenuOptions : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Finds player/enemy objects and calls functions in order to 'unpause' the game
+    /// </summary>
     public void UnpauseObjects()
     {
         if (player == null || enemys == null)
