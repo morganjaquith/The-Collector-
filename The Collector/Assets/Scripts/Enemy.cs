@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour {
 
     [Header("Debug")]
 
-    public bool stopped;
+    public bool stopped,paused;
     public float destinationDistance;
     public float startingSpeed;
     public float speedStartTime;
@@ -60,56 +60,61 @@ public class Enemy : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        //Keep track of the NavAgent's desination distance and if it's stopped
-        stopped = NavAgent.isStopped;
-        destinationDistance = Vector3.Distance(transform.position, NavAgent.destination);
-
-        //If the player is close to the enemy
-        if (player != null)
+        //If the game isn't paused
+        if (!paused)
         {
+            //Keep track of the NavAgent's desination distance and if it's stopped
+            stopped = NavAgent.isStopped;
+            destinationDistance = Vector3.Distance(transform.position, NavAgent.destination);
 
-            //Tell the NavAgent exactly where the player is
-            NavAgent.destination = player.transform.position;
-
-            //If the player is far from the enemy pick a random waypoint and forget about the player
-            if (destinationDistance >= playerFollowDistanceLimit)
+            //If the player is close to the enemy
+            if (player != null)
             {
-                NavAgent.destination = waypoints[GetWaypointIndex()].transform.position;
-                player = null;
-            }
-            //If the enemy's speed has been boosted, slowly move the speed back to it's starting speed
-            else if (NavAgent.speed > startingSpeed)
-            {
-                fadeTime = (Time.time - speedStartTime) / boostEaseOutDuration;
-                NavAgent.speed = Mathf.SmoothStep(speedBoost, startingSpeed, fadeTime);
-            }
-        }
-        else
-        {
 
-            //If we're close enough to the waypoint, stop, else don't stop
-            if (destinationDistance <= waypointFollowDistanceLimit && player == null)
-            {
-                NavAgent.isStopped = true;
+                //Tell the NavAgent exactly where the player is
+                NavAgent.destination = player.transform.position;
 
-                //If we've stopped
-                if (NavAgent.isStopped)
+                //If the player is far from the enemy pick a random waypoint and forget about the player
+                if (destinationDistance >= playerFollowDistanceLimit)
                 {
-                    //Decrement the waypointWaitTime using deltaTime
-                    waypointWaitTime -= Time.deltaTime;
-
-                    //If waitTime has hit 0 or less
-                    if (waypointWaitTime < 0)
-                    {
-                        //Pick another random waypoint and reset the waypointWaitTime
-                        NavAgent.destination = waypoints[GetWaypointIndex()].transform.position;
-                        waypointWaitTime = startWaitTime;
-                    }
+                    NavAgent.destination = waypoints[GetWaypointIndex()].transform.position;
+                    player = null;
+                }
+                
+                //If the enemy's speed has been boosted, slowly move the speed back to it's starting speed
+                if (NavAgent.speed > startingSpeed)
+                {
+                    fadeTime = (Time.time - speedStartTime) / boostEaseOutDuration;
+                    NavAgent.speed = Mathf.SmoothStep(speedBoost, startingSpeed, fadeTime);
                 }
             }
             else
             {
-                NavAgent.isStopped = false;
+
+                //If we're close enough to the waypoint, stop, else don't stop
+                if (destinationDistance <= waypointFollowDistanceLimit && player == null)
+                {
+                    NavAgent.isStopped = true;
+
+                    //If we've stopped
+                    if (NavAgent.isStopped)
+                    {
+                        //Decrement the waypointWaitTime using deltaTime
+                        waypointWaitTime -= Time.deltaTime;
+
+                        //If waitTime has hit 0 or less
+                        if (waypointWaitTime < 0)
+                        {
+                            //Pick another random waypoint and reset the waypointWaitTime
+                            NavAgent.destination = waypoints[GetWaypointIndex()].transform.position;
+                            waypointWaitTime = startWaitTime;
+                        }
+                    }
+                }
+                else
+                {
+                    NavAgent.isStopped = false;
+                }
             }
         }
 	}
@@ -187,5 +192,36 @@ public class Enemy : MonoBehaviour {
 
             return waypointIndexCount++;
         }
+    }
+
+    /// <summary>
+    /// Searches for waypoints with a given tage name
+    /// </summary>
+    /// <param name="tagName"></param>
+    public void GetWaypointsWithNewTag(string tagName)
+    {
+        waypoints = GameObject.FindGameObjectsWithTag(tagName);
+    }
+
+    /// <summary>
+    /// Pauses the Ai
+    /// </summary>
+    public void Pause()
+    {
+        if (!NavAgent.isStopped)
+        {
+            NavAgent.isStopped = true;
+        }
+
+        paused = true;
+    }
+
+    /// <summary>
+    /// Unpauses the Ai
+    /// </summary>
+    public void Unpause()
+    {
+        NavAgent.isStopped = false;
+        paused = false;
     }
 }

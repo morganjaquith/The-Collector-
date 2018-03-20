@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ThirdPersonCamera : MonoBehaviour {
+public class ThirdPersonCamera : MonoBehaviour
+{
 
     [Header("Target to Follow")]
     public Transform target;
@@ -19,7 +19,10 @@ public class ThirdPersonCamera : MonoBehaviour {
 
     [Header("Other")]
     public Transform playerMesh;
+    public bool paused;
+    public bool ClickToMoveCamera;
 
+    private bool usingKeyboard = true;
     private bool dead;
     private Quaternion Xrotation,Yrotation;
     private float currentX, currentY;
@@ -28,35 +31,99 @@ public class ThirdPersonCamera : MonoBehaviour {
     {
         currentY += Input.GetAxis("Mouse Y");
         currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
+
+        /**/
+        //Implement later when we get to do multiple input devices
+        int inputValue = PlayerPrefs.GetInt("PlayerOneInputDevice",1);
+        usingKeyboard = (inputValue == 1) ? true : false;
+        
+
     }
 
     // Update is called once per frame
-    void Update () {
-
-        if (Input.GetButton("Fire2"))
+    void Update ()
+    {
+        if (!paused)
         {
-            currentX += Input.GetAxis("Mouse X");
-            currentY += -Input.GetAxis("Mouse Y");
+            if (ClickToMoveCamera)
+            {
+                if (Input.GetButton("Fire2") && usingKeyboard)
+                {
+                    currentX += Input.GetAxis("Mouse X");
+                    currentY += Input.GetAxis("Mouse Y");
 
-            currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
+                    currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
+                }
+                else if (Input.GetButton("ControllerFire2") && !usingKeyboard)
+                {
+                    //Controller input
+                    currentX += Input.GetAxis("ControllerMouse X");
+                    currentY += Input.GetAxis("ControllerMouse Y");
+
+                    currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
+                }
+            }
+            else
+            {
+                if (usingKeyboard)
+                {
+                    currentX += Input.GetAxis("Mouse X");
+                    currentY += -Input.GetAxis("Mouse Y");
+
+                    currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
+                }
+                else
+                {
+                    //Controller input
+                    currentX += Input.GetAxis("ControllerMouse X");
+                    currentY += Input.GetAxis("ControllerMouse Y");
+
+                    currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
+                }
+            }
         }
     }
 
     private void LateUpdate()
     {
-        Vector3 dir = new Vector3(0, 0, -distance);
+        if (!paused)
+        {
+            Vector3 dir = new Vector3(0, 0, -distance);
 
-        Yrotation = Quaternion.Euler(currentY, currentX, 0);
-        Xrotation = Quaternion.Euler(0, currentX, 0);
+            Yrotation = Quaternion.Euler(currentY, currentX, 0);
+            Xrotation = Quaternion.Euler(0, currentX, 0);
 
-        transform.position = target.position + Yrotation * dir;
+            transform.position = target.position + Yrotation * dir;
 
-        if (!dead)
-        { 
-            playerMesh.rotation = Xrotation;
+            if (!dead)
+            {
+                playerMesh.rotation = Xrotation;
+            }
+
+            transform.LookAt(target.position);
         }
+    }
 
-        transform.LookAt(target.position);
+    public void SetPlayerOneCameraForTwoPlayer()
+    {
+        Camera cam = GetComponent<Camera>();
+        cam.rect = new Rect(0f,0.5f,1f,1f);
+    }
+
+    public void SetPlayerTwoCameraForTwoPlayer()
+    {
+        Camera cam = GetComponent<Camera>();
+        cam.rect = new Rect(0f, -0.5f, 1f, 1f);
+    }
+
+    public void Pause()
+    {
+        paused = true;
+    }
+
+    public void Unpause()
+    {
+        paused = false;
     }
 
     public void PlayerIsDead()

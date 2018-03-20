@@ -252,6 +252,8 @@ MonoBehaviour:
   sensitivityX: 4
   sensitivityY: 1
   playerMesh: {fileID: 4493713019914868}
+  paused: 0
+  ClickRMBToMoveCamera: 0
 --- !u!114 &114498031812658024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,7 +271,8 @@ MonoBehaviour:
   dontDie: 0
   dead: 0
   holdingItem: 0
-  deathStartTime: 0
+  paused: 0
+  isNotSinglePlayer: 0
   pauseMenu: {fileID: 0}
 --- !u!124 &124206755148542686
 Behaviour:

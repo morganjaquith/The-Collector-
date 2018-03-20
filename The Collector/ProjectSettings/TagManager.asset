@@ -7,6 +7,10 @@ TagManager:
   - Waypoint
   - Enemy
   - Item
+  - Quad1Waypoints
+  - Quad2Waypoints
+  - Quad3Waypoints
+  - Quad4Waypoints
   layers:
   - Default
   - TransparentFX

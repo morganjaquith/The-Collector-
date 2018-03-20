@@ -144,6 +144,7 @@ MonoBehaviour:
   waypointFollowDistanceLimit: 2
   goToRandomWaypoint: 0
   stopped: 0
+  paused: 0
   destinationDistance: 0
   startingSpeed: 0
   speedStartTime: 0

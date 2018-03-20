@@ -14,6 +14,9 @@ public class Player : MonoBehaviour {
     [Header("Debug")]
     public bool dead;
     public bool holdingItem;
+    public bool paused;
+    public bool isNotSinglePlayer;
+    public bool usingKeyboard = true;
 
     private float xInput;
     private float zInput;
@@ -21,17 +24,16 @@ public class Player : MonoBehaviour {
 
     private Rigidbody rig;
     private Transform cameraObject;
-    public GameObject pauseMenu;
+    private GameObject pauseMenu;
     private GameObject item;
 
     private Vector3 ZMovement;
     private Vector3 XMovement;
 
-    private void Start ()
+    private void Awake ()
     {
         //Find the pause menu in the scene and disable it
         pauseMenu = GameObject.Find("Canvas");
-        pauseMenu.SetActive(false);
 
         //Keep track of the original movementSensitivity since it'll be modified during runtime (item will cause movementSensitivity to decrease)
         originalMovementSpeed = movementSensitivity;
@@ -39,60 +41,68 @@ public class Player : MonoBehaviour {
         //Get the rigibody from this gameObject and get the cameraObject 
         rig = GetComponent<Rigidbody>();
         cameraObject = transform.GetChild(0);
+
+        /**/
+        //Implement later when we get to do multiple input devices
+        int inputValue = PlayerPrefs.GetInt("PlayerOneInputDevice",1);
+        usingKeyboard = (inputValue == 1) ? true : false;
+
     }
 
     // Update is called once per frame
     void FixedUpdate () 
 	{
-        //If the player isn't dead
-        if (!dead)
+        if (!paused)
         {
-            //Get inputs
-            xInput = Input.GetAxis("Horizontal") * movementSensitivity * Time.deltaTime;
-            zInput = Input.GetAxis("Vertical") * movementSensitivity * Time.deltaTime;
-
-            //Create vectors for the movement
-            XMovement = new Vector3(cameraObject.transform.right.x * xInput, 0, cameraObject.transform.right.z * xInput);
-            ZMovement = new Vector3(cameraObject.transform.forward.x * zInput, 0, cameraObject.transform.forward.z * zInput);
-
-            //Move the object using it's rigidbody 
-            rig.MovePosition(XMovement + ZMovement + transform.position);
-            
-            //If the player is holding and item and left mouse button / "Fire1" is pressed
-            if (holdingItem && Input.GetButtonDown("Fire1"))
+            //If the player isn't dead
+            if (!dead)
             {
-                //Unparent the item from the player
-                item.transform.parent = null;
+                if (usingKeyboard)
+                {
+                    //Get inputs
+                    xInput = Input.GetAxis("Horizontal") * movementSensitivity * Time.deltaTime;
+                    zInput = -Input.GetAxis("Vertical") * movementSensitivity * Time.deltaTime;
+                }
+				else
+				{
+                    //Controller Inputs
+                    xInput = Input.GetAxis("ControllerHorizontal") * movementSensitivity * Time.deltaTime;
+                    zInput = -Input.GetAxis("ControllerVertical") * movementSensitivity * Time.deltaTime;
+                }
 
-                //Drop item in front of player by adding player's velocity to item
-                item.transform.GetComponent<Rigidbody>().velocity += rig.velocity;
+                //Create vectors for the movement
+                XMovement = new Vector3(cameraObject.transform.right.x * xInput, 0, cameraObject.transform.right.z * xInput);
+                ZMovement = new Vector3(cameraObject.transform.forward.x * zInput, 0, cameraObject.transform.forward.z * zInput);
 
-                //Return to normal movement speed
-                movementSensitivity = originalMovementSpeed;
+                //Move the object using it's rigidbody 
+                rig.MovePosition(XMovement + ZMovement + transform.position);
 
-                //Indicate we aren't holding an item anymore
-                holdingItem = false;
+                //If the player is holding and item and left mouse button / "Fire1" is pressed
+                if (holdingItem && ((Input.GetButtonDown("Fire1") && usingKeyboard )||( Input.GetButton("ControllerFire1") && !usingKeyboard)))
+                {
+                    DropItem();
+                }
+                //If the player hit the cancel key, 'pause' the game
+                else if (Input.GetButtonDown("Cancel") && !isNotSinglePlayer || (Input.GetButtonDown("CancelController") && !usingKeyboard && !isNotSinglePlayer))
+                {
+                    //Enable pause menu
+                    pauseMenu.transform.GetChild(1).gameObject.SetActive(true);
+
+                    //Call the pause function
+                    pauseMenu.GetComponent<MenuOptions>().PauseObjects();
+                }
             }
-            //If the player hit the escape key, 'pause' the game
-            else if (Input.GetKeyDown(KeyCode.Escape))
+            else
             {
-                //Enable pause menu
-                pauseMenu.SetActive(true);
+                //decrement deathDuration using time
+                deathDuration -= Time.deltaTime;
 
-                //Call the pause function
-                pauseMenu.GetComponent<MenuOptions>().PauseObjects();
-            }
-        }
-        else
-        {
-            //decrement deathDuration using time
-            deathDuration -= Time.deltaTime;
-
-            //if deathDuration is 0 or less
-            if(deathDuration <= 0)
-            {
-                //Destroy this gameobject
-                Destroy(this.gameObject);
+                //if deathDuration is 0 or less
+                if (deathDuration <= 0)
+                {
+                    //Destroy this gameobject
+                    Destroy(this.gameObject);
+                }
             }
         }
     }
@@ -125,6 +135,41 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void DropItem()
+    {
+        //Unparent the item from the player
+        item.transform.parent = null;
+
+        //Drop item in front of player by adding player's velocity to item
+        item.transform.GetComponent<Rigidbody>().velocity += rig.velocity;
+
+        //Return to normal movement speed
+        movementSensitivity = originalMovementSpeed;
+
+        //Indicate we aren't holding an item anymore
+        holdingItem = false;
+    }
+
+    public void Pause(bool pauseThirdPersonCamera = false)
+    {
+        if (pauseThirdPersonCamera)
+        {
+            cameraObject.GetComponent<ThirdPersonCamera>().Pause();
+        }
+
+        paused = true;
+    }
+
+    public void Unpause(bool pauseThirdPersonCamera)
+    {
+        if (pauseThirdPersonCamera)
+        {
+            cameraObject.GetComponent<ThirdPersonCamera>().Unpause();
+        }
+
+        paused = false;
+    }
+
     /// <summary>
     /// 'Kills' the player by calling a funcion on the thirdPersonCamera, setting rigibody constraints to none, and setting dead to true.
     /// </summary>
@@ -139,7 +184,8 @@ public class Player : MonoBehaviour {
             //If we are holding an item currently
             if(holdingItem)
             {
-                //drop it  
+                //drop it
+                DropItem();
             }
             
             //Set the rigibody constraints on the player to 'none' so it falls over
@@ -147,10 +193,6 @@ public class Player : MonoBehaviour {
 
             //Indicate that the player is dead
             dead = true;
-
-            //Output message to Unity console
-            Debug.Log("You're dead");
         }
 	}
-	
 }
