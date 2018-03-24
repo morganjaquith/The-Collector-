@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MenuOptions : MonoBehaviour {
     
     public bool notFading;
+    public EventSystem inputHandler;
+    public GameObject ButtonToSelectOnPause;
     private GameObject[] players;
     private GameObject[] enemys;
     private Image fadeMat;
@@ -31,8 +34,9 @@ public class MenuOptions : MonoBehaviour {
                 fadeMat.material.color = new Color();
             }
         }
+        
     }
-
+    
     private void FixedUpdate()
     {
         //If we are fading out
@@ -122,7 +126,7 @@ public class MenuOptions : MonoBehaviour {
     /// <summary>
     /// Finds player/enemy objects and calls functions in order to 'pause' the game
     /// </summary>
-    public void PauseObjects()
+    public void PauseObjects(bool usingController = false)
     {
         if (players == null || enemys == null)
         {
@@ -138,6 +142,11 @@ public class MenuOptions : MonoBehaviour {
         for (int i = 0; i < enemys.Length; i++)
         {
             enemys[i].GetComponent<Enemy>().Pause();
+        }
+
+        if(usingController && inputHandler != null && ButtonToSelectOnPause != null)
+        {
+            inputHandler.SetSelectedGameObject(ButtonToSelectOnPause);
         }
     }
 

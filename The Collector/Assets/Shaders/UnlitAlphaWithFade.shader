@@ -1,4 +1,5 @@
-﻿Shader "Custom/Unlit/UnlitAlphaWithFade" 
+﻿//Allows us to to a fade affect by incrementing the alpha channel from 0 to 1 to fade out, and 1 to 0 to fade in
+Shader "Custom/Unlit/UnlitAlphaWithFade" 
 {
 	Properties 
 	{

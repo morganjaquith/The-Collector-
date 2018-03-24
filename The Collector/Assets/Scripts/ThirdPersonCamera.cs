@@ -19,10 +19,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
     [Header("Other")]
     public Transform playerMesh;
+    public bool isTheSecondPlayer;
     public bool paused;
     public bool ClickToMoveCamera;
 
-    private bool usingKeyboard = true;
+    public bool usingKeyboard = true;
     private bool dead;
     private Quaternion Xrotation,Yrotation;
     private float currentX, currentY;
@@ -31,12 +32,19 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         currentY += Input.GetAxis("Mouse Y");
         currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
+        int inputValue;
 
-        /**/
+        if (!isTheSecondPlayer)
+        {
+            inputValue = PlayerPrefs.GetInt("PlayerOneInputDevice");
+        }
+        else
+        {
+            inputValue = PlayerPrefs.GetInt("PlayerTwoInputDevice");
+        }
+
         //Implement later when we get to do multiple input devices
-        int inputValue = PlayerPrefs.GetInt("PlayerOneInputDevice",1);
         usingKeyboard = (inputValue == 1) ? true : false;
-        
 
     }
 
@@ -72,7 +80,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
                     currentY = Mathf.Clamp(currentY, minYAngle, maxYAngle);
                 }
-                else
+                else if (!usingKeyboard)
                 {
                     //Controller input
                     currentX += Input.GetAxis("ControllerMouse X");

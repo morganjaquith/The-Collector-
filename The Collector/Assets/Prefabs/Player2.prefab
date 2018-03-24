@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 54401781753985692}
   - component: {fileID: 114498031812658024}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675534078077644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.44, y: -4.183, z: -12.35}
+  m_LocalPosition: {x: 867.0416, y: 662.2425, z: -183.14308}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4606263602492496}
@@ -185,7 +185,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 59a27a85525b5294caf17e515df4ada0, type: 2}
+  - {fileID: 2100000, guid: d0912f9bec6af7045898c2c51c06e1c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
   sensitivityX: 4
   sensitivityY: 1
   playerMesh: {fileID: 4493713019914868}
-  isTheSecondPlayer: 0
+  isTheSecondPlayer: 1
   paused: 0
   ClickToMoveCamera: 0
   usingKeyboard: 1
@@ -274,9 +274,9 @@ MonoBehaviour:
   dead: 0
   holdingItem: 0
   paused: 0
-  isPlayer2: 0
-  isNotSinglePlayer: 0
-  usingKeyboard: 1
+  isPlayer2: 1
+  isNotSinglePlayer: 1
+  usingKeyboard: 0
 --- !u!124 &124206755148542686
 Behaviour:
   m_ObjectHideFlags: 1

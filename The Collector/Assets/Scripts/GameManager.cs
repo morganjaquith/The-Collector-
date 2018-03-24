@@ -1,34 +1,41 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
 	
     /// <summary>
     /// NOTE FOR SINGLE PLAYER/TWO PLAYER SCREEN:
-    /// Hitting Single Player should start the game in single player mode (Input device shall be decided on MainMenu Start)
     /// Hitting Two Player should bring up another screen where the user chooses an input device
     /// </summary>
 
-	public int playerOneLives = 3;
-	public int playerTwoLives = 3;
-
+    [Header("Enemy Spawn Count")]
     public int enemyCount = 1;
 
-    public float playerOnePoints, playerTwoPoints;
-
-    public float runtimeGameTime;
-
+    [Header("Mode Time Limits")]
     public float singlePlayerGameTime=60f, twoPlayerGameTime = 120f;
 
+    [Header("Main Game Prefabs")]
 	public GameObject playerOnePrefab;
 	public GameObject playerTwoPrefab;
     public GameObject enemyPrefab;
 	
+    [Header("Game Prefab Spawn Points")]
 	public Transform playerOneSpawnPoint;
 	public Transform playerTwoSpawnPoint;
     public Transform[] enemySpawnPoints;
-	
+
+    [Header("Level UI")]
+    public GameObject endGameBackToMenuButton;
+    public EventSystem inputHandler;
+
+    [Header("Debug")]
+    public float playerOnePoints, playerTwoPoints;
+    public int playerOneLives = 3;
+    public int playerTwoLives = 3;
+    public float runtimeGameTime;
 	public bool GameStart;
+    public bool paused;
     public bool TimesUp;
 	public bool isTwoPlayer;
 
@@ -53,8 +60,6 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         enemyInstances = new GameObject[enemyCount];
-
-        runtimeGameTime = playerOnePoints;
 
         if (gameUI == null)
         {
@@ -94,25 +99,35 @@ public class GameManager : MonoBehaviour {
 			{
 				//Spawn player one
 				playerOneInstance = Instantiate(playerOnePrefab,playerOneSpawnPoint.position, playerOnePrefab.transform.rotation);
-				playerOneLives--;
+
+                if (isTwoPlayer)
+                {
+                    playerOneInstance.transform.GetChild(0).GetComponent<ThirdPersonCamera>().SetPlayerOneCameraForTwoPlayer();
+                }
+                playerOneLives--;
                 playerOneLivesUI.text = "Lives : " + playerOneLives;
 			}
 
-            /*
-			if(playerTwoInstance == null && playerTwoLives > 0)
+            
+			if(playerTwoInstance == null && playerTwoLives > 0 && isTwoPlayer)
 			{
 				//Spawn player two
 				playerTwoInstance = Instantiate(playerTwoPrefab,playerTwoSpawnPoint.position, playerTwoPrefab.transform.rotation);
-				playerTwoLives--;
+                playerTwoInstance.transform.GetChild(0).GetComponent<ThirdPersonCamera>().SetPlayerTwoCameraForTwoPlayer();
+                playerTwoLives--;
                 playerTwoLivesUI.text = "Lives : " + playerTwoLives;
-			}*/
-            
-            runtimeGameTime -= Time.deltaTime;
+			}
+
+            if (!paused)
+            {
+                runtimeGameTime -= Time.deltaTime;
+            }
 
 			//Create float of the counter that's meant to be displayed to the screen
             float displayTime = (float) System.Math.Round(runtimeGameTime, 2);
             string timeDisplayCorrection = "";
 
+            //The statments below allow us to display the timer in a good format
             if (displayTime >= 100f)
             {
                 if (displayTime.ToString().Length == 5)
@@ -180,6 +195,12 @@ public class GameManager : MonoBehaviour {
                 runtimeGameTime = 0;
                 EndGame();
 			}
+
+            //Check if someone's run out of lives
+            if(playerOneLives <= 0 || playerTwoLives <= 0)
+            {
+                EndGame();
+            }
 			
 		}
 	}
@@ -207,8 +228,8 @@ public class GameManager : MonoBehaviour {
             playerTwoPointsUI.enabled = true;
 
             //Spawn player two, setting the camera/points appropraitely
-            playerTwoInstance = Instantiate(playerOnePrefab, playerOneSpawnPoint.position, playerOnePrefab.transform.rotation);
-            playerTwoPrefab.transform.GetChild(0).GetComponent<ThirdPersonCamera>().SetPlayerTwoCameraForTwoPlayer();
+            playerTwoInstance = Instantiate(playerTwoPrefab, playerTwoSpawnPoint.position, playerTwoPrefab.transform.rotation);
+            playerTwoInstance.transform.GetChild(0).GetComponent<ThirdPersonCamera>().SetPlayerTwoCameraForTwoPlayer();
             playerTwoPoints = 0;
 
 
@@ -217,7 +238,7 @@ public class GameManager : MonoBehaviour {
 
             //Spawn player one, setting the camera/points appropraitely
             playerOneInstance = Instantiate(playerOnePrefab, playerOneSpawnPoint.position, playerOnePrefab.transform.rotation);
-            playerOnePrefab.transform.GetChild(0).GetComponent<ThirdPersonCamera>().SetPlayerOneCameraForTwoPlayer();
+            playerOneInstance.transform.GetChild(0).GetComponent<ThirdPersonCamera>().SetPlayerOneCameraForTwoPlayer();
             playerOnePoints = 0;
 
         }
@@ -241,16 +262,31 @@ public class GameManager : MonoBehaviour {
     private void EndGame()
     {
 
+        inputHandler.SetSelectedGameObject(endGameBackToMenuButton);
+
         //If time is up
         if (TimesUp)
         {
             //If we're in two player mode
-          /*  if (isTwoPlayer)
+            if (isTwoPlayer)
             {
-                //compare scores
-                //Show who wins
+                if(playerOnePoints > playerTwoPoints)
+                {
+                    TwoPlayerWinTitleUI.text = "Player One Wins!";
+                    ShowScore(playerOnePoints);
+                }
+                else if(playerOnePoints < playerTwoPoints)
+                {
+                    TwoPlayerWinTitleUI.text = "Player Two Wins!";
+                    ShowScore(playerTwoPoints);
+                }
+                else
+                {
+                    TwoPlayerWinTitleUI.text = "It's a Tie!";
+                    ShowScore(playerOnePoints);
+                }
             }
-            else */ //If we're in single player
+            else //If we're in single player
             {
                 //Show score
                 //If the player just sat there and didn't earn points
@@ -279,6 +315,11 @@ public class GameManager : MonoBehaviour {
 
         playerOneInstance.GetComponent<Player>().Pause(true);
 
+        if (isTwoPlayer)
+        {
+            playerTwoInstance.GetComponent<Player>().Pause(true);
+        }
+
         for (int i = 0; i < enemyInstances.Length; i++)
         {
             enemyInstances[i].GetComponent<Enemy>().Pause();
@@ -291,8 +332,12 @@ public class GameManager : MonoBehaviour {
         TimesUp = false;
         playerOneLives = maxLives;
         playerOnePoints = 0;
-        //playerTwoLives = maxLives;
-        //PlayerTwoPoints = 0;
+
+        if (isTwoPlayer)
+        {
+            playerTwoLives = maxLives;
+            playerTwoPoints = 0;
+        }
 
     }
 
@@ -303,11 +348,11 @@ public class GameManager : MonoBehaviour {
             playerOnePoints += pointsToAdd;
             playerOnePointsUI.text = "Points : " + playerOnePoints;
         }
-     /*   else
+        else
         {
             playerTwoPoints += pointsToAdd;
             playerTwoPointsUI.text = "Points : " + playerTwoPoints;
-        } */
+        }
     }
 
     private void ShowScore(float winningScore)
@@ -316,11 +361,20 @@ public class GameManager : MonoBehaviour {
         WinningScoreUI.text = "Score : " + winningScore;
     }
 
-    /*
+    public void Pause()
+    {
+        paused = true;
+    }
+
+    public void Unpause()
+    {
+        paused = false;
+    }
+
     //This assumes user has already chosen who gets what input device (keyboard+mouse or controller)
-    //And this is before GameStart
+    //And this is called before GameStart and after every instantation of player 2
 	public void IsTwoPlayer()
 	{
 		isTwoPlayer = true;
-	}*/
+	}
 }

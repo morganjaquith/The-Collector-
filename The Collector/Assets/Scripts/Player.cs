@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
     public bool dead;
     public bool holdingItem;
     public bool paused;
+    public bool isPlayer2;
     public bool isNotSinglePlayer;
     public bool usingKeyboard = true;
 
@@ -42,9 +43,18 @@ public class Player : MonoBehaviour {
         rig = GetComponent<Rigidbody>();
         cameraObject = transform.GetChild(0);
 
-        /**/
+        int inputValue;
+
+        if(!isPlayer2)
+        {
+            inputValue = PlayerPrefs.GetInt("PlayerOneInputDevice");
+        }
+        else
+        {
+            inputValue = PlayerPrefs.GetInt("PlayerTwoInputDevice");
+        }
+
         //Implement later when we get to do multiple input devices
-        int inputValue = PlayerPrefs.GetInt("PlayerOneInputDevice",1);
         usingKeyboard = (inputValue == 1) ? true : false;
 
     }
@@ -67,7 +77,7 @@ public class Player : MonoBehaviour {
 				{
                     //Controller Inputs
                     xInput = Input.GetAxis("ControllerHorizontal") * movementSensitivity * Time.deltaTime;
-                    zInput = -Input.GetAxis("ControllerVertical") * movementSensitivity * Time.deltaTime;
+                    zInput = Input.GetAxis("ControllerVertical") * movementSensitivity * Time.deltaTime;
                 }
 
                 //Create vectors for the movement
@@ -85,11 +95,15 @@ public class Player : MonoBehaviour {
                 //If the player hit the cancel key, 'pause' the game
                 else if (Input.GetButtonDown("Cancel") && !isNotSinglePlayer || (Input.GetButtonDown("CancelController") && !usingKeyboard && !isNotSinglePlayer))
                 {
+                    pauseMenu.SetActive(true);
+
                     //Enable pause menu
                     pauseMenu.transform.GetChild(1).gameObject.SetActive(true);
 
                     //Call the pause function
-                    pauseMenu.GetComponent<MenuOptions>().PauseObjects();
+                    pauseMenu.GetComponent<MenuOptions>().PauseObjects(!usingKeyboard);
+
+                    GameObject.Find("GameUI").GetComponent<GameManager>().Pause();
                 }
             }
             else
@@ -150,7 +164,7 @@ public class Player : MonoBehaviour {
         holdingItem = false;
     }
 
-    public void Pause(bool pauseThirdPersonCamera = false)
+    public void Pause(bool pauseThirdPersonCamera = true)
     {
         if (pauseThirdPersonCamera)
         {
@@ -160,7 +174,7 @@ public class Player : MonoBehaviour {
         paused = true;
     }
 
-    public void Unpause(bool pauseThirdPersonCamera)
+    public void Unpause(bool pauseThirdPersonCamera = true)
     {
         if (pauseThirdPersonCamera)
         {
