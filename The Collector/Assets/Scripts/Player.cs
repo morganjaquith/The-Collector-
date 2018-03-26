@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
     public float movementSensitivity = 0.5f;
     public float deathDuration = 3f;
 
+    public GameObject playerMesh;
 	public Transform itemDestination;
 
     [Header("Debug Preferences")]
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour {
     private float originalMovementSpeed;
 
     private Rigidbody rig;
-    private Transform cameraObject;
+    private ThirdPersonCamera cameraObject;
     private GameObject pauseMenu;
     private GameObject item;
 
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour {
 
         //Get the rigibody from this gameObject and get the cameraObject 
         rig = GetComponent<Rigidbody>();
-        cameraObject = transform.GetChild(0);
+        cameraObject = transform.GetChild(0).GetComponent<ThirdPersonCamera>();
 
         int inputValue;
 
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour {
             inputValue = PlayerPrefs.GetInt("PlayerTwoInputDevice");
         }
 
-        //Implement later when we get to do multiple input devices
+
         usingKeyboard = (inputValue == 1) ? true : false;
 
     }
@@ -81,8 +82,8 @@ public class Player : MonoBehaviour {
                 }
 
                 //Create vectors for the movement
-                XMovement = new Vector3(cameraObject.transform.right.x * xInput, 0, cameraObject.transform.right.z * xInput);
-                ZMovement = new Vector3(cameraObject.transform.forward.x * zInput, 0, cameraObject.transform.forward.z * zInput);
+                XMovement = new Vector3(playerMesh.transform.right.x * xInput, 0, playerMesh.transform.right.z * xInput);
+                ZMovement = new Vector3(playerMesh.transform.forward.x * zInput, 0, playerMesh.transform.forward.z * zInput);
 
                 //Move the object using it's rigidbody 
                 rig.MovePosition(XMovement + ZMovement + transform.position);
@@ -168,7 +169,7 @@ public class Player : MonoBehaviour {
     {
         if (pauseThirdPersonCamera)
         {
-            cameraObject.GetComponent<ThirdPersonCamera>().Pause();
+            cameraObject.Pause();
         }
 
         paused = true;
@@ -178,7 +179,7 @@ public class Player : MonoBehaviour {
     {
         if (pauseThirdPersonCamera)
         {
-            cameraObject.GetComponent<ThirdPersonCamera>().Unpause();
+            cameraObject.Unpause();
         }
 
         paused = false;
@@ -193,7 +194,7 @@ public class Player : MonoBehaviour {
         if (!dontDie)
         {
             //Tell the thirdPersonCamera that the player is dead
-            cameraObject.GetComponent<ThirdPersonCamera>().PlayerIsDead();
+            cameraObject.PlayerIsDead();
 
             //If we are holding an item currently
             if(holdingItem)

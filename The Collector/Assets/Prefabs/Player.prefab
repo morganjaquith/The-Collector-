@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1675534078077644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.44, y: -4.183, z: -12.35}
+  m_LocalPosition: {x: -10.1568165, y: -5.586177, z: -35.365044}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4606263602492496}
@@ -269,6 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSensitivity: 5
   deathDuration: 5.5
+  playerMesh: {fileID: 1983939044504466}
   itemDestination: {fileID: 4123352906663526}
   dontDie: 0
   dead: 0

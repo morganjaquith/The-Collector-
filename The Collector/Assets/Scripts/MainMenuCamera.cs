@@ -2,8 +2,6 @@
 
 public class MainMenuCamera : MonoBehaviour {
 
-    public Vector3 rotationDirection;
-
     private void Start()
     {
         //If VR is connected,
@@ -29,9 +27,4 @@ public class MainMenuCamera : MonoBehaviour {
             Debug.Log("No External Controller Detected");
         }
     }
-
-    private void FixedUpdate ()
-    {
-        transform.Rotate(rotationDirection);
-	}
 }
