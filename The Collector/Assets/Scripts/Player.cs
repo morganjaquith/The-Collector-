@@ -4,6 +4,7 @@ public class Player : MonoBehaviour {
 
     [Header("Player Preferences")]
     public float movementSensitivity = 0.5f;
+    public float movementSensitivityWithPickup = 0.25f;
     public float deathDuration = 3f;
 
     public GameObject playerMesh;
@@ -60,6 +61,34 @@ public class Player : MonoBehaviour {
 
     }
 
+    private void Update()
+    {
+        if (!paused)
+        {
+            if (!dead)
+            {
+                //If the player is holding and item and left mouse button / "Fire1" is pressed
+                if ((holdingItem && Input.GetButtonDown("Fire1") && usingKeyboard) || (holdingItem && Input.GetButtonDown("ControllerFire1") && !usingKeyboard))
+                {
+                    DropItem();
+                }
+                //If the player hit the cancel key, 'pause' the game
+                else if (Input.GetButtonDown("Cancel") && !isNotSinglePlayer || (Input.GetButtonDown("CancelController") && !usingKeyboard && !isNotSinglePlayer))
+                {
+                    pauseMenu.SetActive(true);
+
+                    //Enable pause menu
+                    pauseMenu.transform.GetChild(1).gameObject.SetActive(true);
+
+                    //Call the pause function
+                    pauseMenu.GetComponent<MenuOptions>().PauseObjects(!usingKeyboard);
+
+                    GameObject.Find("GameUI").GetComponent<GameManager>().Pause();
+                }
+            }
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate () 
 	{
@@ -88,24 +117,6 @@ public class Player : MonoBehaviour {
                 //Move the object using it's rigidbody 
                 rig.MovePosition(XMovement + ZMovement + transform.position);
 
-                //If the player is holding and item and left mouse button / "Fire1" is pressed
-                if (holdingItem && ((Input.GetButtonDown("Fire1") && usingKeyboard )||( Input.GetButton("ControllerFire1") && !usingKeyboard)))
-                {
-                    DropItem();
-                }
-                //If the player hit the cancel key, 'pause' the game
-                else if (Input.GetButtonDown("Cancel") && !isNotSinglePlayer || (Input.GetButtonDown("CancelController") && !usingKeyboard && !isNotSinglePlayer))
-                {
-                    pauseMenu.SetActive(true);
-
-                    //Enable pause menu
-                    pauseMenu.transform.GetChild(1).gameObject.SetActive(true);
-
-                    //Call the pause function
-                    pauseMenu.GetComponent<MenuOptions>().PauseObjects(!usingKeyboard);
-
-                    GameObject.Find("GameUI").GetComponent<GameManager>().Pause();
-                }
             }
             else
             {
@@ -121,42 +132,29 @@ public class Player : MonoBehaviour {
             }
         }
     }
-
-    /// <summary>
-    /// When the player collides with an object, check to see if it's an "item".
-    /// If we aren't already holding an item, 'take' that item object.
-    /// </summary>
-    /// <param name="collision"></param>
-    private void OnCollisionEnter (Collision collision)
+    
+    public void GetItemInfo(GameObject itemObj)
     {
-        //if we collided with object tagged "item" and we aren't currently holding an item
-        if(collision.transform.tag == "item" && !holdingItem)
-        {
-            //We've found an item
-            item = collision.gameObject;
 
-            //Call a function on the item to move item to a point above the player 
-            //item.GetComponent<Item>().MoveToDestination(itemDestination);
-            
-            //Parent the item to the player, indicating it's been taken
-            item.transform.parent = transform;
+        item = itemObj;
 
-            //half the movement sensitivity
-            movementSensitivity /= 2;
+        //half the movement sensitivity
+        movementSensitivity = movementSensitivityWithPickup;
 
-            //Indicate that we are holding an item
-            holdingItem = true;
-
-        }
+        //Indicate that we are holding an item
+        holdingItem = true;
     }
 
     private void DropItem()
     {
+
         //Unparent the item from the player
         item.transform.parent = null;
 
+        item.GetComponent<Item>().Dropped();
+
         //Drop item in front of player by adding player's velocity to item
-        item.transform.GetComponent<Rigidbody>().velocity += rig.velocity;
+        item.transform.GetComponent<Rigidbody>().velocity += cameraObject.transform.forward;
 
         //Return to normal movement speed
         movementSensitivity = originalMovementSpeed;
@@ -210,4 +208,9 @@ public class Player : MonoBehaviour {
             dead = true;
         }
 	}
+
+    public bool IsPlayerTwo()
+    {
+        return isPlayer2;
+    }
 }

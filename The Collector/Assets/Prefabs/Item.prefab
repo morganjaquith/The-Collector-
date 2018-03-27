@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4618650331657270}
   - component: {fileID: 54239344729934968}
   - component: {fileID: 65731046722505816}
+  - component: {fileID: 114130000632216860}
   m_Layer: 0
   m_Name: Item
   m_TagString: Item
@@ -54,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1372265180891460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16083908, y: -4.09, z: -38.10731}
+  m_LocalPosition: {x: -9.77, y: -2.18, z: -12.328303}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4797394347644606}
@@ -142,6 +143,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.7623225, z: 1}
   m_Center: {x: 0, y: -0.42421705, z: 0}
+--- !u!114 &114130000632216860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1372265180891460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdede5eb3fe900a40aa24ec341a0e3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointValue: 25
+  speed: 7
+  dropTime: 1
+  ownerShip: 0
+  pickedUp: 0
+  justDropped: 0
+  movingItem: 0
 --- !u!114 &114705859816954966
 MonoBehaviour:
   m_ObjectHideFlags: 1

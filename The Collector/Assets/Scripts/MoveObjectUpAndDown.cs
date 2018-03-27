@@ -22,4 +22,9 @@ public class MoveObjectUpAndDown : MonoBehaviour
         //set the object's Y to the new calculated Y
         transform.localPosition = new Vector3(pos.x, newY, pos.z) * height;
     }
+
+    private void OnDisable()
+    {
+        transform.localPosition = pos;
+    }
 }

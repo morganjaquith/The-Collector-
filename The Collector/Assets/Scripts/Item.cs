@@ -1,99 +1,83 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Item : MonoBehaviour {
 
-    GameObject mainCamera;
-    bool carrying;
-    GameObject carriedObject;
-    public float distance;
-    public float smooth;
+    public float pointValue = 10f;
+	public float speed = 2f;
+    public float dropTime = 3f;
+    public int ownerShip = 0;
+    public bool pickedUp;
+    public bool justDropped;
+    public bool movingItem;
+	private Transform destination;
+    private float startDropTime = 3f;
 
-    void Start ()
+    private void Start()
     {
-        mainCamera=GameObject.FindWithTag("MainCamera");
-    }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        if(carrying)
-        {
-            carry(carriedObject);
-            checkDrop();
-        }
-        else
-        {
-            pickup();
-        }
-        
+        startDropTime = dropTime;
     }
 
-    void carry(GameObject o)
-    {
-        o.transform.position = Vector3.Lerp(o.transform.position,mainCamera.transform.position + mainCamera.transform.forward * distance,Time.deltaTime*smooth);
-
-    }
-    void pickup()
-    {
-        if(Input.GetMouseButtonDown(0))//Input.GetKeyDown(KeyCode.E)
-        {
-            int x = Screen.width / 2;
-            int y = Screen.height / 2;
-
-            Ray ray =mainCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);//new Vector3(x, y)
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit))
+    void Update ()
+	{
+		if(movingItem)
+		{
+            
+			float step = speed * Time.deltaTime;
+			transform.position = Vector3.MoveTowards(transform.position, destination.position, step);
+			
+			if(transform.position == destination.position)
             {
-                Pickupable p = hit.collider.GetComponent<Pickupable>();
-                if(p !=null)
-                {
-                    carrying = true;
-                    carriedObject = p.gameObject;
-                    p.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                transform.parent = destination.transform;
+                transform.GetChild(0).GetComponent<MoveObjectUpAndDown>().enabled = false;
+                movingItem = false;
+                pickedUp = true;
+			}
+			
+		}
+        else if (justDropped)
+        {
+            dropTime -= Time.deltaTime;
 
-                }
+            if(dropTime <= 0)
+            {
+                pickedUp = false;
+                justDropped = false;
+                dropTime = startDropTime;
             }
         }
+	}
+
+    public void Dropped()
+    {
+        justDropped = true;
+        GetComponent<BoxCollider>().enabled = true;
+        GetComponent<Rigidbody>().isKinematic = false;
+        transform.GetChild(0).GetComponent<MoveObjectUpAndDown>().enabled = true;
     }
 
-    void checkDrop()
+    public void MoveToPosition(Transform destinationTransform)
     {
-        if (Input.GetMouseButtonDown(0))
+		destination = destinationTransform;
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+		movingItem = true;
+    }
+
+    
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Player" && !pickedUp)
         {
-            dropObject();
+            MoveToPosition(collision.transform.GetChild(2));
+
+            ownerShip = (collision.transform.GetComponent<Player>().IsPlayerTwo()) ? 2 : 1;
+
+            collision.transform.GetComponent<Player>().GetItemInfo(gameObject);
         }
-
     }
-
-    void dropObject()
+    
+    public int OwnerShip()
     {
-        carrying = false;
-        carriedObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        carriedObject = null;
-
+        return ownerShip;
     }
-    //NOTE : Zone and GameManager scripts have not been created currently, but write the code as if it was finished, just comment out any red lines when done.
-    //2nd NOTE : Player script will handle item dropping logic, any extra stuff I forget to mention is on me
-
-    //This is an item script that's meant to be attached to an item object in the level.
-    //When the player touches this item, the item will then move over the player's head, visually indicating that it's been taken.
-
-    //OnCollisionEnter, check and see if the object that hit us is tagged "player".
-    //If that's the case use GetComponent<Player>() to get the destination Transform for where this item is going.
-    //Make it so that this object moves over to where the destination Transform is.
-    //When the items makes it to it's destination, parent this object to the player. (Example transform.parent = player.transform)
-
-    //Should have a float variable called 'points' (or equivalent). You can assign whatever value you want to 'points'
-    //The Zone script will be grabbing this 'points' variable when this item is placed in the zone.
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //if collision object tag == "player"
-
-    //Get the destination of where the object is going (Transform) (from the player script)
-
-    //Move item over to the destination that was given
-
-    //}
 }

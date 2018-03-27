@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000006, guid: c55d2583fd8a28d4bb7340e4ff7e14cb,
+  m_LightingDataAsset: {fileID: 112000006, guid: d93827d7042387a479e0037bd5168fc1,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -3266,7 +3266,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d7f75447e4a3df3479d4c295bc1fead0, type: 3}
+  - {fileID: 2100000, guid: 6f8374fe04cbf7542b30675accf36829, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
