@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 136955769980984864}
   - component: {fileID: 54401781753985692}
   - component: {fileID: 114498031812658024}
-  - component: {fileID: 114467275928285776}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -88,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1537936784048550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4712053446085386}
@@ -257,19 +256,6 @@ MonoBehaviour:
   paused: 0
   ClickToMoveCamera: 0
   usingKeyboard: 1
---- !u!114 &114467275928285776
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1675534078077644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db4d9bdc7abb87f44ba8d43e49ef000b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 0
-  smooth: 0
 --- !u!114 &114498031812658024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -282,6 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSensitivity: 5
+  movementSensitivityWithPickup: 2.5
   deathDuration: 5.5
   playerMesh: {fileID: 1983939044504466}
   itemDestination: {fileID: 4123352906663526}

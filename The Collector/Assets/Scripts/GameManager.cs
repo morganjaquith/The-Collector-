@@ -12,6 +12,16 @@ public class GameManager : MonoBehaviour {
     [Header("Enemy Spawn Count")]
     public int enemyCount = 1;
 
+    [Header("Enemy Waypoint Preferences")]
+    public bool modifyWaypointPrefs;
+    public float waypointWaitTime = 2f;
+    public float waypointFollowDistanceLimit = 2f;
+    public bool goToRandomWaypoint = false;
+
+    [Header("Enemy Quads")]
+    public bool useQuadrants;
+    public string[] waypointQuadrantTags;
+
     [Header("Mode Time Limits")]
     public float singlePlayerGameTime = 60f;
     public float twoPlayerGameTime = 120f;
@@ -35,6 +45,9 @@ public class GameManager : MonoBehaviour {
     public GameObject playerOneZone;
     public GameObject playerTwoZone;
 
+    [Header("Item Bases")]
+    public GameObject[] itemBases;
+
     [Header("Debug")]
     public float playerOnePoints = 0;
     public float playerTwoPoints = 0;
@@ -46,10 +59,9 @@ public class GameManager : MonoBehaviour {
     public bool TimesUp;
     public bool isTwoPlayer;
 
-    private int maxLives = 3;
-    private GameObject playerOneInstance;
-    private GameObject playerTwoInstance;
-    private GameObject[] enemyInstances;
+    public GameObject playerOneInstance;
+    public GameObject playerTwoInstance;
+    public GameObject[] enemyInstances;
 
     private GameObject gameUI;
 
@@ -234,8 +246,21 @@ public class GameManager : MonoBehaviour {
         {
             enemyInstances[i] = GameObject.Instantiate(enemyPrefab, enemySpawnPoints[i].transform.position, enemySpawnPoints[i].transform.rotation);
 
-            //Integrate later when we have definite quad zones with their own specific waypoints;
-            //enemyInstances[i].GetComponent<Enemy>().GetWaypointsWithNewTag(waypointTags[i]); 
+            if (useQuadrants || modifyWaypointPrefs)
+            {
+                Enemy enemyInstanceScript = enemyInstances[i].GetComponent<Enemy>();
+
+                if (useQuadrants)
+                {
+                    enemyInstanceScript.GetWaypointsWithNewTag(waypointQuadrantTags[i]);
+                }
+
+                if (modifyWaypointPrefs)
+                {
+                    enemyInstanceScript.ChangeWaypointPreferences(waypointWaitTime, waypointFollowDistanceLimit, goToRandomWaypoint);
+                }
+            }
+
         }
 
         if (isTwoPlayer)
@@ -275,6 +300,8 @@ public class GameManager : MonoBehaviour {
             playerOnePoints = 0;
 
         }
+
+        EnableItemBases();
 
         TimeCounterUI.enabled = true;
 
@@ -399,6 +426,14 @@ public class GameManager : MonoBehaviour {
     {
         WinningScoreUI.enabled = true;
         WinningScoreUI.text = "Score : " + winningScore;
+    }
+
+    private void EnableItemBases()
+    {
+        for (int i = 0; i < itemBases.Length; i++)
+        {
+            itemBases[i].SetActive(true);
+        }
     }
 
     private void SpawnWinCamera(GameObject objectToSpawnOn)

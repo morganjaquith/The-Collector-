@@ -40,11 +40,14 @@ public class Enemy : MonoBehaviour {
     public float startWaitTime;
     public int waypointIndexCount;
     public GameObject player;
+    public Player playerScript;
     public GameObject[] waypoints;
     public NavMeshAgent NavAgent;
+    private string assignedWaypointTag;
+    private bool searchingForWaypoints;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         //Remember the wait time since waypointWaitTime gets modified during runtime
         startWaitTime = waypointWaitTime;
@@ -60,15 +63,20 @@ public class Enemy : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate ()
     {
+        if(waypoints.Length <= 0)
+        {
+            waypoints = GameObject.FindGameObjectsWithTag(assignedWaypointTag);
+        }
+
         //If the game isn't paused
-        if (!paused)
+        if (!paused && waypoints.Length > 0)
         {
             //Keep track of the NavAgent's desination distance and if it's stopped
             stopped = NavAgent.isStopped;
             destinationDistance = Vector3.Distance(transform.position, NavAgent.destination);
 
             //If the player is close to the enemy
-            if (player != null)
+            if (player != null && !playerScript.IsDead())
             {
 
                 //Tell the NavAgent exactly where the player is
@@ -92,7 +100,7 @@ public class Enemy : MonoBehaviour {
             {
 
                 //If we're close enough to the waypoint, stop, else don't stop
-                if (destinationDistance <= waypointFollowDistanceLimit && player == null)
+                if (destinationDistance <= waypointFollowDistanceLimit && (player == null || playerScript.IsDead()))
                 {
                     NavAgent.isStopped = true;
 
@@ -134,6 +142,8 @@ public class Enemy : MonoBehaviour {
             //Set player to this gameobject
             player = other.gameObject;
 
+            playerScript = player.GetComponent<Player>();
+
             //Set destination to this player object
             NavAgent.destination = player.transform.position;
 
@@ -158,17 +168,45 @@ public class Enemy : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         //If we've collided with the player
-        if(collision.transform.tag == "Player")
+        if(collision.transform.tag == "Player" && !playerScript.IsDead())
         {
+
             //Set the navAgent's speed to it's starting speed
             NavAgent.speed = startingSpeed;
 
             //Tell the player object to applyDamage/die
             collision.transform.GetComponent<Player>().ApplyDamage();
+
+            collision.rigidbody.AddForceAtPosition(transform.forward*12, collision.contacts[0].point);
+
+            NavAgent.isStopped = true;
             
             //player is null
             player = null;
         }
+    }
+
+    /// <summary>
+    /// Allows GameManager to edit these preferences during runtime
+    /// </summary>
+    /// <param name="newWaypointTime"></param>
+    /// <param name="newWaypointFollowDistanceLimit"></param>
+    /// <param name="newGoToRandomWaypointPref"></param>
+    public void ChangeWaypointPreferences(float newWaypointTime, float newWaypointFollowDistanceLimit, bool newGoToRandomWaypointPref)
+    {
+        waypointWaitTime = newWaypointTime;
+        waypointFollowDistanceLimit = newWaypointFollowDistanceLimit;
+        goToRandomWaypoint = newGoToRandomWaypointPref;
+    }
+
+    /// <summary>
+    /// Searches for waypoints with a given tage name
+    /// </summary>
+    /// <param name="tagName"></param>
+    public void GetWaypointsWithNewTag(string tagName)
+    {
+        assignedWaypointTag = tagName;
+        waypoints = GameObject.FindGameObjectsWithTag(tagName);
     }
 
     /// <summary>
@@ -192,15 +230,6 @@ public class Enemy : MonoBehaviour {
 
             return waypointIndexCount++;
         }
-    }
-
-    /// <summary>
-    /// Searches for waypoints with a given tage name
-    /// </summary>
-    /// <param name="tagName"></param>
-    public void GetWaypointsWithNewTag(string tagName)
-    {
-        waypoints = GameObject.FindGameObjectsWithTag(tagName);
     }
 
     /// <summary>

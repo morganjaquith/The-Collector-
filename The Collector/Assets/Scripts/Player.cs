@@ -88,8 +88,7 @@ public class Player : MonoBehaviour {
             }
         }
     }
-
-    // Update is called once per frame
+    
     void FixedUpdate () 
 	{
         if (!paused)
@@ -154,7 +153,7 @@ public class Player : MonoBehaviour {
         item.GetComponent<Item>().Dropped();
 
         //Drop item in front of player by adding player's velocity to item
-        item.transform.GetComponent<Rigidbody>().velocity += cameraObject.transform.forward;
+        item.transform.GetComponent<Rigidbody>().velocity += playerMesh.transform.forward;
 
         //Return to normal movement speed
         movementSensitivity = originalMovementSpeed;
@@ -207,7 +206,12 @@ public class Player : MonoBehaviour {
             //Indicate that the player is dead
             dead = true;
         }
-	}
+    }
+
+    public bool IsDead()
+    {
+        return dead;
+    }
 
     public bool IsPlayerTwo()
     {
