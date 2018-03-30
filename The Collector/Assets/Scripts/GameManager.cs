@@ -3,12 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
-
-    /// <summary>
-    /// NOTE FOR SINGLE PLAYER/TWO PLAYER SCREEN:
-    /// Hitting Two Player should bring up another screen where the user chooses an input device
-    /// </summary>
-
+    
     [Header("Enemy Spawn Count")]
     public int enemyCount = 1;
 
@@ -38,6 +33,8 @@ public class GameManager : MonoBehaviour {
     public Transform[] enemySpawnPoints;
 
     [Header("Level UI")]
+    public GameObject singlePlayerOrMultiplayerOptions;
+    public GameObject nextLevelMenuButton;
     public GameObject endGameBackToMenuButton;
     public EventSystem inputHandler;
 
@@ -107,6 +104,27 @@ public class GameManager : MonoBehaviour {
         TimeCounterUI = gameUI.transform.GetChild(3).GetComponent<Text>();
 
         backButton = gameUI.transform.GetChild(4).gameObject;
+
+
+        int modeOption = PlayerPrefs.GetInt("PromptedPlayMode");
+
+        //We're immedietly starting in singleplayer mode
+        if (modeOption == 1)
+        {
+            singlePlayerOrMultiplayerOptions.SetActive(false);
+            endGameBackToMenuButton.SetActive(false);
+            IsSinglePlayer();
+            StartGame();
+        }
+        //We're immedietly starting in multiplayer mode
+        else if (modeOption == 2)
+        {
+            singlePlayerOrMultiplayerOptions.SetActive(false);
+            endGameBackToMenuButton.SetActive(false);
+            IsTwoPlayer();
+            StartGame();
+        }
+
     }
 
     private void FixedUpdate()
@@ -337,6 +355,9 @@ public class GameManager : MonoBehaviour {
                         TwoPlayerWinTitleUI.text = "It's a Tie!";
                         ShowScore(playerOnePoints);
                     }
+
+                    nextLevelMenuButton.SetActive(true);
+
                 }
                 else //If we're in single player
                 {
@@ -352,6 +373,7 @@ public class GameManager : MonoBehaviour {
                         singlePlayerWinTitleUI.enabled = true;
                         SpawnWinCamera(playerOneInstance);
                         ShowScore(playerOnePoints);
+                        nextLevelMenuButton.SetActive(true);
                     }
                 }
             }
@@ -376,6 +398,9 @@ public class GameManager : MonoBehaviour {
                         SpawnWinCamera(playerOneInstance);
                         ShowScore(playerOnePoints);
                     }
+
+                    nextLevelMenuButton.SetActive(true);
+
                 }
                 //If player runes out of lives
                 else if (playerOneLives <= 0)
@@ -454,5 +479,12 @@ public class GameManager : MonoBehaviour {
 	public void IsTwoPlayer()
 	{
 		isTwoPlayer = true;
-	}
+        PlayerPrefs.SetInt("PromptedPlayMode", 2);
+    }
+
+    public void IsSinglePlayer()
+    {
+        isTwoPlayer = false;
+        PlayerPrefs.SetInt("PromptedPlayMode", 1);
+    }
 }

@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 54239344729934968}
   - component: {fileID: 65731046722505816}
   - component: {fileID: 114130000632216860}
+  - component: {fileID: 114616781499386962}
+  - component: {fileID: 114801622341823558}
   m_Layer: 8
   m_Name: Item
   m_TagString: Item
@@ -161,6 +163,20 @@ MonoBehaviour:
   pickedUp: 0
   justDropped: 0
   movingItem: 0
+--- !u!114 &114616781499386962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1372265180891460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d8053431d79e9b44be47621ef669742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSizeLimit: 1
+  currentSizeValue: 0
+  sizeValueIncrement: 0.05
 --- !u!114 &114705859816954966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -174,6 +190,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2.5
   height: 0.35
+--- !u!114 &114801622341823558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1372265180891460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79a9c1bab3f90c43a48160c785d193d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSizeLimit: 0
+  currentSizeValue: 0
+  sizeValueDecrement: 0.05
+  destroyWhenDone: 1
 --- !u!114 &114935879395243636
 MonoBehaviour:
   m_ObjectHideFlags: 1

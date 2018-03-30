@@ -8,7 +8,10 @@ public class PlayerOneInputSetter : MonoBehaviour {
         //Spawn VR related objects
         //Delete this camera object
 
-        if(Input.GetJoystickNames().Length > 0)
+        //Default value since at this point in runtime we haven't asked the player what mode
+        PlayerPrefs.SetInt("PromptedPlayMode", 0);
+
+        if (Input.GetJoystickNames().Length > 0)
         {
             if (Input.GetJoystickNames()[0] == "Controller (Xbox One For Windows)")
             {
