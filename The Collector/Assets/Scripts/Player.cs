@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
             if (!dead)
             {
                 //If the player is holding and item and left mouse button / "Fire1" is pressed
-                if ((holdingItem && Input.GetButtonDown("Fire1") && usingKeyboard) || (holdingItem && Input.GetButtonDown("ControllerFire1") && !usingKeyboard))
+                if ((holdingItem && Input.GetButtonDown("Fire1") && usingKeyboard) || (holdingItem && Input.GetAxisRaw("ControllerFire1") > 0.1f && !usingKeyboard))
                 {
                     DropItem();
                 }
