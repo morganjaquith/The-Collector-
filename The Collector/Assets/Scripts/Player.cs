@@ -13,6 +13,11 @@ public class Player : MonoBehaviour {
     [Header("Debug Preferences")]
     public bool dontDie;
 
+    [Header("Sound")]
+    public AudioClip throwSound;
+    public AudioClip deathSound;
+    public AudioSource soundSource;
+
     [Header("Debug")]
     public bool dead;
     public bool holdingItem;
@@ -68,7 +73,7 @@ public class Player : MonoBehaviour {
             if (!dead)
             {
                 //If the player is holding and item and left mouse button / "Fire1" is pressed
-                if ((holdingItem && Input.GetButtonDown("Fire1") && usingKeyboard) || (holdingItem && Input.GetAxisRaw("ControllerFire1") > 0.1f && !usingKeyboard))
+                if ((holdingItem && Input.GetButtonDown("Fire1") && usingKeyboard) || (holdingItem && Input.GetAxis("ControllerFire1") > 0.01f && !usingKeyboard))
                 {
                     DropItem();
                 }
@@ -114,7 +119,7 @@ public class Player : MonoBehaviour {
                 ZMovement = new Vector3(playerMesh.transform.forward.x * zInput, 0, playerMesh.transform.forward.z * zInput);
 
                 //Move the object using it's rigidbody 
-                rig.MovePosition(XMovement + ZMovement + transform.position);
+                rig.MovePosition((XMovement + ZMovement + transform.position));
 
             }
             else
@@ -153,6 +158,9 @@ public class Player : MonoBehaviour {
 
     private void DropItem()
     {
+
+        soundSource.clip = throwSound;
+        soundSource.Play();
 
         //Unparent the item from the player
         item.transform.parent = null;
@@ -212,6 +220,10 @@ public class Player : MonoBehaviour {
 
             //Indicate that the player is dead
             dead = true;
+
+            soundSource.clip = deathSound;
+            soundSource.Play();
+
         }
     }
 

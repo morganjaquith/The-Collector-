@@ -2,6 +2,8 @@
 
 public class Item : MonoBehaviour {
 
+    public AudioClip addPointsSound;
+    public AudioSource soundSource;
     public float pointValue = 10f;
 	public float speed = 2f;
     public float dropTime = 3f;
@@ -78,6 +80,8 @@ public class Item : MonoBehaviour {
 
     public void Shrink()
     {
+        soundSource.clip = addPointsSound;
+        soundSource.Play();
         GetComponent<ShrinkObjectOnCall>().Shrink();
     }
     

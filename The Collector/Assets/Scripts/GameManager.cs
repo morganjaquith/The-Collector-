@@ -398,7 +398,7 @@ public class GameManager : MonoBehaviour {
                         SpawnWinCamera(playerOneInstance);
                         ShowScore(playerOnePoints);
                     }
-
+                    
                     nextLevelMenuButton.SetActive(true);
 
                 }
@@ -451,6 +451,21 @@ public class GameManager : MonoBehaviour {
     {
         WinningScoreUI.enabled = true;
         WinningScoreUI.text = "Score : " + winningScore;
+
+        if(isTwoPlayer)
+        {
+            if (PlayerPrefs.GetFloat("TwoPlayerHighScore") > winningScore)
+            {
+                PlayerPrefs.SetFloat("TwoPlayerHighScore", winningScore);
+            }
+        }
+        else
+        {
+            if (PlayerPrefs.GetFloat("SinglePlayerHighScore") > winningScore)
+            {
+                PlayerPrefs.SetFloat("SinglePlayerHighScore", winningScore);
+            }
+        }
     }
 
     private void EnableItemBases()
