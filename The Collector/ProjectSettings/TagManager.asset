@@ -11,6 +11,7 @@ TagManager:
   - Quad2Waypoints
   - Quad3Waypoints
   - Quad4Waypoints
+  - GameManager
   layers:
   - Default
   - TransparentFX

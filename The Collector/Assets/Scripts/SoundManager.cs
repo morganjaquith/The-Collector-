@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 public class SoundManager : MonoBehaviour {
-	
+
+    public bool dontDestroyOnLevelLoad;
 	public bool playsMusic; //If false, this'll be playing sound effects alone
 	public float volume;
 	AudioSource source;
@@ -10,9 +11,33 @@ public class SoundManager : MonoBehaviour {
 	{
 		source = GetComponent<AudioSource>();
         CheckPlayerPrefs();
+
+        if(dontDestroyOnLevelLoad)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
 	}
-	
-	public void PlaySound(AudioClip sound)
+
+    private void FixedUpdate()
+    {
+        if (playsMusic)
+        {
+            if(volume != PlayerPrefs.GetFloat("Music"))
+            {
+                volume = PlayerPrefs.GetFloat("Music");
+            }
+        }
+        else
+        {
+            if (volume != PlayerPrefs.GetFloat("Sound"))
+            {
+                volume = PlayerPrefs.GetFloat("Sound");
+            }
+        }
+    }
+
+    public void PlaySound(AudioClip sound)
 	{
 		source.clip = sound;
 		source.Play();
@@ -22,11 +47,11 @@ public class SoundManager : MonoBehaviour {
 	{
 		if(playsMusic)
 		{
-			volume = PlayerPrefs.GetInt("Music");
+			volume = PlayerPrefs.GetFloat("Music");
 		}
 		else
 		{
-			volume = PlayerPrefs.GetInt("Sound");
+			volume = PlayerPrefs.GetFloat("Sound");
 		}
 		
 		source.volume = volume;

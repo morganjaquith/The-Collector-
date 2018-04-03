@@ -66,7 +66,7 @@ public class Item : MonoBehaviour {
     
     public void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == "Player" && !pickedUp)
+        if(collision.transform.tag == "Player" && !pickedUp && !collision.transform.GetComponent<Player>().IsDead())
         {
             MoveToPosition(collision.transform.GetChild(2));
 
@@ -74,6 +74,11 @@ public class Item : MonoBehaviour {
 
             collision.transform.GetComponent<Player>().GetItemInfo(gameObject);
         }
+    }
+
+    public void Shrink()
+    {
+        GetComponent<ShrinkObjectOnCall>().Shrink();
     }
     
     public int OwnerShip()

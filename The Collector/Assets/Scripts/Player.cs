@@ -102,8 +102,8 @@ public class Player : MonoBehaviour {
                     xInput = Input.GetAxis("Horizontal") * movementSensitivity * Time.deltaTime;
                     zInput = -Input.GetAxis("Vertical") * movementSensitivity * Time.deltaTime;
                 }
-				else
-				{
+                else
+                {
                     //Controller Inputs
                     xInput = Input.GetAxis("ControllerHorizontal") * movementSensitivity * Time.deltaTime;
                     zInput = Input.GetAxis("ControllerVertical") * movementSensitivity * Time.deltaTime;
@@ -119,6 +119,13 @@ public class Player : MonoBehaviour {
             }
             else
             {
+
+
+                if (holdingItem)
+                {
+                    DropItem();
+                }
+
                 //decrement deathDuration using time
                 deathDuration -= Time.deltaTime;
 
