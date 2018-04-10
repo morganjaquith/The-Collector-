@@ -5,6 +5,7 @@ public class ItemBase : MonoBehaviour
 
     public GameObject itemObject;
     private GameObject itemInstance;
+    public bool dontRespawn;
 
     //If we ever consider having more than one type of item (Example : One gives 10 points, one gives 25, another gives 50 etc...)
     //public GameObject[] itemObjects;
@@ -16,7 +17,7 @@ public class ItemBase : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(itemInstance == null)
+        if(itemInstance == null && !dontRespawn)
         {
             SpawnItem();
         }

@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
     public Transform[] enemySpawnPoints;
 
     [Header("Level UI")]
+    public GameObject highScoreUIObject;
     public GameObject singlePlayerOrMultiplayerOptions;
     public GameObject nextLevelMenuButton;
     public GameObject endGameBackToMenuButton;
@@ -256,6 +257,8 @@ public class GameManager : MonoBehaviour {
     public void StartGame()
     {
 
+        highScoreUIObject.SetActive(true);
+
         GameStart = true;
 
         //Spawn enemy in four quads
@@ -329,6 +332,7 @@ public class GameManager : MonoBehaviour {
     {
         if (GameStart)
         {
+            highScoreUIObject.SetActive(false);
 
             inputHandler.SetSelectedGameObject(endGameBackToMenuButton);
 
@@ -454,18 +458,22 @@ public class GameManager : MonoBehaviour {
 
         if(isTwoPlayer)
         {
-            if (PlayerPrefs.GetFloat("TwoPlayerHighScore") > winningScore)
+            if (PlayerPrefs.GetFloat("TwoPlayerHighScore",0) < winningScore)
             {
                 PlayerPrefs.SetFloat("TwoPlayerHighScore", winningScore);
+                PlayerPrefs.Save();
             }
         }
         else
         {
-            if (PlayerPrefs.GetFloat("SinglePlayerHighScore") > winningScore)
+            if (PlayerPrefs.GetFloat("SinglePlayerHighScore",0) < winningScore)
             {
                 PlayerPrefs.SetFloat("SinglePlayerHighScore", winningScore);
+                PlayerPrefs.Save();
             }
         }
+
+
     }
 
     private void EnableItemBases()

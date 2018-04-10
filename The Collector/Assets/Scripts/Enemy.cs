@@ -43,8 +43,8 @@ public class Enemy : MonoBehaviour {
     public Player playerScript;
     public GameObject[] waypoints;
     public NavMeshAgent NavAgent;
-    private string assignedWaypointTag;
-    private bool searchingForWaypoints;
+    public string assignedWaypointTag;
+    public bool searchingForWaypoints;
 
     // Use this for initialization
     void Start ()
@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour {
             {
 
                 //If we're close enough to the waypoint, stop, else don't stop
-                if (destinationDistance <= waypointFollowDistanceLimit && (player == null || playerScript.IsDead()))
+                if (destinationDistance <= waypointFollowDistanceLimit && (player == null || playerScript.IsDead() || object.ReferenceEquals(player,null)))
                 {
                     NavAgent.isStopped = true;
 
@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour {
                         waypointWaitTime -= Time.deltaTime;
 
                         //If waitTime has hit 0 or less
-                        if (waypointWaitTime < 0)
+                        if (waypointWaitTime <= 0)
                         {
                             //Pick another random waypoint and reset the waypointWaitTime
                             NavAgent.destination = waypoints[GetWaypointIndex()].transform.position;
