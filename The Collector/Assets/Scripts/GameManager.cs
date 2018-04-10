@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class GameManager : MonoBehaviour {
     
     [Header("Enemy Spawn Count")]
-    public int enemyCount = 1;
+    public int enemyCount = 5;
 
     [Header("Enemy Waypoint Preferences")]
     public bool modifyWaypointPrefs;
