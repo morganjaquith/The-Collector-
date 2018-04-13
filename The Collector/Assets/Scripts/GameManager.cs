@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
     
+    public int itemstocollect;
+
     [Header("Enemy Spawn Count")]
     public int enemyCount = 5;
 
@@ -131,6 +133,11 @@ public class GameManager : MonoBehaviour {
     {
         if (GameStart)
         {
+            int total = itemstocollect * 25;
+            if (playerOnePoints == total)
+            {
+                zerotime();  
+            }
 
             if (playerOneInstance == null && playerOneLives > 0)
             {
@@ -253,6 +260,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void zerotime()
+    {
+        runtimeGameTime = 0;
+    }
+
     public void StartGame()
     {
 
@@ -331,7 +343,7 @@ public class GameManager : MonoBehaviour {
         {
 
             inputHandler.SetSelectedGameObject(endGameBackToMenuButton);
-
+            
             //If time is up
             if (TimesUp)
             {
