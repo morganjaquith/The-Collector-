@@ -4,8 +4,12 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
     
+
     [Header("Enemy Spawn Count")]
     public int enemyCount = 5;
+
+    [Header("Individual Enemy Spawn Points")]
+    public Transform[] enemySpawnPoints;
 
     [Header("Enemy Waypoint Preferences")]
     public bool modifyWaypointPrefs;
@@ -17,6 +21,9 @@ public class GameManager : MonoBehaviour {
     public bool useQuadrants;
     public string[] waypointQuadrantTags;
 
+    [Header("Item Limit")]
+    public int numberOfItemsToCollect;
+
     [Header("Mode Time Limits")]
     public float singlePlayerGameTime = 60f;
     public float twoPlayerGameTime = 120f;
@@ -27,13 +34,11 @@ public class GameManager : MonoBehaviour {
     public GameObject enemyPrefab;
     public GameObject WinCamera;
 
-    [Header("Game Prefab Spawn Points")]
+    [Header("Player One / Player Two Points")]
     public Transform playerOneSpawnPoint;
     public Transform playerTwoSpawnPoint;
-    public Transform[] enemySpawnPoints;
 
     [Header("Level UI")]
-    public GameObject highScoreUIObject;
     public GameObject singlePlayerOrMultiplayerOptions;
     public GameObject nextLevelMenuButton;
     public GameObject endGameBackToMenuButton;
@@ -132,6 +137,11 @@ public class GameManager : MonoBehaviour {
     {
         if (GameStart)
         {
+            
+            if ((playerOnePoints == numberOfItemsToCollect * 25 && !isTwoPlayer || playerOnePoints+playerTwoPoints == numberOfItemsToCollect * 25)&&numberOfItemsToCollect >0)
+            {
+                zerotime();  
+            }
 
             if (playerOneInstance == null && playerOneLives > 0)
             {
@@ -254,10 +264,13 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void zerotime()
+    {
+        runtimeGameTime = 0;
+    }
+
     public void StartGame()
     {
-
-        highScoreUIObject.SetActive(true);
 
         GameStart = true;
 
@@ -332,10 +345,9 @@ public class GameManager : MonoBehaviour {
     {
         if (GameStart)
         {
-            highScoreUIObject.SetActive(false);
 
             inputHandler.SetSelectedGameObject(endGameBackToMenuButton);
-
+            
             //If time is up
             if (TimesUp)
             {
@@ -458,22 +470,22 @@ public class GameManager : MonoBehaviour {
 
         if(isTwoPlayer)
         {
-            if (PlayerPrefs.GetFloat("TwoPlayerHighScore",0) < winningScore)
+            if (PlayerPrefs.GetFloat("TwoPlayerHighScore") > winningScore)
             {
                 PlayerPrefs.SetFloat("TwoPlayerHighScore", winningScore);
+                PlayerPrefs.SetString("NewTwoPlayerHighScore", "true");
                 PlayerPrefs.Save();
             }
         }
         else
         {
-            if (PlayerPrefs.GetFloat("SinglePlayerHighScore",0) < winningScore)
+            if (PlayerPrefs.GetFloat("SinglePlayerHighScore") > winningScore)
             {
                 PlayerPrefs.SetFloat("SinglePlayerHighScore", winningScore);
+                PlayerPrefs.SetString("NewSinglePlayerHighScore", "true");
                 PlayerPrefs.Save();
             }
         }
-
-
     }
 
     private void EnableItemBases()

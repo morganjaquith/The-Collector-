@@ -708,6 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemObject: {fileID: 1372265180891460, guid: b5f2f1a948e978647b468f665ebfc63c, type: 2}
+  Respawn: 0
 --- !u!65 &60890813
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1266,6 +1267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemObject: {fileID: 1372265180891460, guid: b5f2f1a948e978647b468f665ebfc63c, type: 2}
+  Respawn: 0
 --- !u!65 &118276739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4318,96 +4320,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 664050458}
---- !u!1 &685999055
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 685999056}
-  - component: {fileID: 685999059}
-  - component: {fileID: 685999058}
-  - component: {fileID: 685999057}
-  m_Layer: 5
-  m_Name: HighScore
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &685999056
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 685999055}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 924674714}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -414.99997, y: 400}
-  m_SizeDelta: {x: 1000, y: 85}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &685999057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 685999055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c11b46df4cf544da338fce506b2dcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keepText: 1
-  getTwoPlayerScore: 0
-  scoreFound: 0
-  gameManager: {fileID: 924674715}
---- !u!114 &685999058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 685999055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 70
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 70
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'High Score : 0'
---- !u!222 &685999059
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 685999055}
 --- !u!1 &694779079
 GameObject:
   m_ObjectHideFlags: 0
@@ -5737,7 +5649,6 @@ RectTransform:
   - {fileID: 160171870}
   - {fileID: 417713594}
   - {fileID: 1341237530}
-  - {fileID: 685999056}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5758,6 +5669,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCount: 4
+  enemySpawnPoints:
+  - {fileID: 1599221646}
+  - {fileID: 592219318}
+  - {fileID: 2112570554}
+  - {fileID: 1278679796}
   modifyWaypointPrefs: 1
   waypointWaitTime: 0.75
   waypointFollowDistanceLimit: 2
@@ -5768,6 +5684,7 @@ MonoBehaviour:
   - Quad2Waypoints
   - Quad3Waypoints
   - Quad4Waypoints
+  numberOfItemsToCollect: 0
   singlePlayerGameTime: 60
   twoPlayerGameTime: 120
   playerOnePrefab: {fileID: 1675534078077644, guid: d54504c475aa9d844b4a2ebf24ce8693,
@@ -5779,12 +5696,6 @@ MonoBehaviour:
   WinCamera: {fileID: 1230649406954980, guid: e4f62ba3ed4740c458501b51d163aa48, type: 2}
   playerOneSpawnPoint: {fileID: 1533515936}
   playerTwoSpawnPoint: {fileID: 773099656}
-  enemySpawnPoints:
-  - {fileID: 1599221646}
-  - {fileID: 592219318}
-  - {fileID: 2112570554}
-  - {fileID: 1278679796}
-  highScoreUIObject: {fileID: 685999055}
   singlePlayerOrMultiplayerOptions: {fileID: 160171869}
   nextLevelMenuButton: {fileID: 1341237529}
   endGameBackToMenuButton: {fileID: 1142361780}
@@ -7927,6 +7838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemObject: {fileID: 1372265180891460, guid: b5f2f1a948e978647b468f665ebfc63c, type: 2}
+  Respawn: 0
 --- !u!65 &1224756785
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8474,7 +8386,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Level4
+          m_StringArgument: Morgan Level
           m_BoolArgument: 0
         m_CallState: 1
       - m_Target: {fileID: 924674710}
@@ -9899,6 +9811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemObject: {fileID: 1372265180891460, guid: b5f2f1a948e978647b468f665ebfc63c, type: 2}
+  Respawn: 0
 --- !u!65 &1528814340
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10924,7 +10837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 21a2009403cdb27468c3d25e39a3ea3b, type: 2}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:

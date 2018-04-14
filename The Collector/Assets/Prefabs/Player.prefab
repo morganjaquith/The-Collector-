@@ -348,8 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e1ea2c86cfa2943bd5993a85b831a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSensitivity: 5
-  movementSensitivityWithPickup: 2.5
+  movementSensitivity: 7
+  movementSensitivityWithPickup: 4.5
   deathDuration: 5.5
   playerMesh: {fileID: 1983939044504466}
   itemDestination: {fileID: 4123352906663526}
