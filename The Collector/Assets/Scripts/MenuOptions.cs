@@ -21,7 +21,7 @@ public class MenuOptions : MonoBehaviour {
     private void Start()
     {
 
-        if(fadeMat == null && !notFading)
+        if (fadeMat == null && !notFading)
         {
             fadeMat = transform.GetChild(0).GetComponent<Image>();
 
@@ -93,7 +93,17 @@ public class MenuOptions : MonoBehaviour {
     /// <param name="levelName"></param>
     public void LoadLevel(string levelName)
     {
-        scene = levelName;
+        //Check if there are any new high scores
+        if (PlayerPrefs.GetString("NewSinglePlayerHighScore") == "true" || PlayerPrefs.GetString("NewTwoPlayerHighScore") == "true")
+        {
+            //If so, Load Leaderboard scene immedietly
+            scene = "Leaderboard";
+        }
+        else
+        {
+            scene = levelName;
+        }
+
         fadingOut = true;
     }
 

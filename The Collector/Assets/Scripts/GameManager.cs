@@ -358,7 +358,7 @@ public class GameManager : MonoBehaviour {
                     {
                         TwoPlayerWinTitleUI.text = "Player One Wins!";
                         SpawnWinCamera(playerOneInstance);
-                        ShowScore(playerOnePoints);
+                        ShowScore(playerOnePoints,true);
                     }
                     else if (playerOnePoints < playerTwoPoints)
                     {
@@ -463,24 +463,39 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void ShowScore(float winningScore)
+    private void ShowScore(float winningScore,bool playerOneGotHighScore=false)
     {
         WinningScoreUI.enabled = true;
         WinningScoreUI.text = "Score : " + winningScore;
 
         if(isTwoPlayer)
         {
-            if (PlayerPrefs.GetFloat("TwoPlayerHighScore") > winningScore)
+            if (PlayerPrefs.GetFloat("TwoPlayerHighScore",0) < winningScore)
             {
                 PlayerPrefs.SetFloat("TwoPlayerHighScore", winningScore);
+
+                Debug.Log("New highscore for player two leaderboard");
+
                 PlayerPrefs.SetString("NewTwoPlayerHighScore", "true");
+
+                if(playerOneGotHighScore)
+                {
+                    PlayerPrefs.SetString("PlayerOneGotTwoPlayerScore", "true");
+                }
+                else
+                {
+                    PlayerPrefs.SetString("PlayerOneGotTwoPlayerScore", "false");
+                }
+
                 PlayerPrefs.Save();
             }
         }
         else
         {
-            if (PlayerPrefs.GetFloat("SinglePlayerHighScore") > winningScore)
+            if (PlayerPrefs.GetFloat("SinglePlayerHighScore",0) < winningScore)
             {
+                Debug.Log("New highscore for player one leaderboard");
+
                 PlayerPrefs.SetFloat("SinglePlayerHighScore", winningScore);
                 PlayerPrefs.SetString("NewSinglePlayerHighScore", "true");
                 PlayerPrefs.Save();
