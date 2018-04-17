@@ -5,7 +5,7 @@ public class SoundManager : MonoBehaviour {
     public bool dontDestroyOnLevelLoad;
 	public bool playsMusic; //If false, this'll be playing sound effects alone
 	public float volume;
-	AudioSource source;
+	public AudioSource source;
 	
 	private void Start()
 	{

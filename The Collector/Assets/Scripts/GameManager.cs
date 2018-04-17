@@ -3,7 +3,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour {
-    
+
+    [Header("Music To Play")]
+    public AudioClip music;
 
     [Header("Enemy Spawn Count")]
     public int enemyCount = 5;
@@ -79,8 +81,28 @@ public class GameManager : MonoBehaviour {
     private Text TimeCounterUI;
     private GameObject backButton;
 
+    private SoundManager soundManager;
+
     private void Start()
     {
+        if (music != null)
+        {
+            try
+            {
+                soundManager = GameObject.Find("MusicPlayer").GetComponent<SoundManager>();
+
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Log("MusicPlayer not found! Did you not start your game in the MainMenu level? That's where MusicPlayer gets created.   "+ex.Message);
+            }
+
+            if (soundManager != null)
+            {
+                soundManager.PlaySound(music);
+            }
+        }
+
         enemyInstances = new GameObject[enemyCount];
 
         if (gameUI == null)
