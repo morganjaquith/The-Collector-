@@ -9,8 +9,14 @@ public class Zone : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Enemy")
+        {
+            Destroy(other.gameObject);
+        }
+
         if (other.gameObject.tag == "Item")
         {
+            Destroy(other.gameObject);
             itemObject = other.GetComponent<Item>();
 
             if (itemObject.OwnerShip() == 1 && isPlayerOnesZone)
