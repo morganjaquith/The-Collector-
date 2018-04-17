@@ -138,7 +138,10 @@ public class GameManager : MonoBehaviour {
             {
                 zerotime();  
             }
-
+            if (playerTwoPoints == total)
+            {
+                zerotime();
+            }
             if (playerOneInstance == null && playerOneLives > 0)
             {
                 if (playerOneLives > 1)
