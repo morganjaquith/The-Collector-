@@ -9,11 +9,6 @@ public class Zone : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
-        {
-            Destroy(other.gameObject);
-        }
-
         if (other.gameObject.tag == "Item")
         {
             Destroy(other.gameObject);
@@ -35,6 +30,6 @@ public class Zone : MonoBehaviour {
         pointValue = itemObject.pointValue;
         itemObject.Shrink();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        gameManager.AddPoints(pointValue, isPlayerOnesZone);
+        gameManager.AddPoints(pointValue, isPlayerOnesZone, true);
     }
 }

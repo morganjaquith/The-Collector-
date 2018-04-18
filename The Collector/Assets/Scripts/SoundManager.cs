@@ -26,6 +26,7 @@ public class SoundManager : MonoBehaviour {
             if(volume != PlayerPrefs.GetFloat("Music"))
             {
                 volume = PlayerPrefs.GetFloat("Music");
+                source.volume = volume;
             }
         }
         else
@@ -33,6 +34,7 @@ public class SoundManager : MonoBehaviour {
             if (volume != PlayerPrefs.GetFloat("Sound"))
             {
                 volume = PlayerPrefs.GetFloat("Sound");
+                source.volume = volume;
             }
         }
     }
@@ -47,11 +49,11 @@ public class SoundManager : MonoBehaviour {
 	{
 		if(playsMusic)
 		{
-			volume = PlayerPrefs.GetFloat("Music");
+			volume = PlayerPrefs.GetFloat("Music",1);
 		}
 		else
 		{
-			volume = PlayerPrefs.GetFloat("Sound");
+			volume = PlayerPrefs.GetFloat("Sound",1);
 		}
 		
 		source.volume = volume;

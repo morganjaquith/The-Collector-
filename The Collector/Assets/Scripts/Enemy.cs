@@ -179,6 +179,8 @@ public class Enemy : MonoBehaviour {
 
             collision.rigidbody.AddForceAtPosition(transform.forward*12, collision.contacts[0].point);
 
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+
             NavAgent.isStopped = true;
             
             //player is null

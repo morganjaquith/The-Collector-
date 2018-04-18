@@ -19,10 +19,11 @@ public class Item : MonoBehaviour {
 
     void Update ()
 	{
-		if(movingItem)
+		if(movingItem&& destination != null)
 		{
             
 			float step = speed * Time.deltaTime;
+
 			transform.position = Vector3.MoveTowards(transform.position, destination.position, step);
 			
 			if(transform.position == destination.position)
@@ -44,6 +45,10 @@ public class Item : MonoBehaviour {
                 justDropped = false;
                 dropTime = startDropTime;
             }
+        }
+        else if ( destination== null && movingItem)
+        {
+            movingItem = false;
         }
 	}
 

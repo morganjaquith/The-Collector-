@@ -236,6 +236,11 @@ public class LeaderboardManager : MonoBehaviour {
             enterNameMenuElements.SetActive(false);
             leaderBoardMenuElements.SetActive(true);
 
+            PlayerPrefs.SetFloat("SinglePlayerHighScore", 0f);
+            PlayerPrefs.SetFloat("TwoPlayerHighScore", 0f);
+
+            PlayerPrefs.Save();
+
             ShowScores();
         }
     }

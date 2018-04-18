@@ -17,6 +17,7 @@ public class MenuOptions : MonoBehaviour {
     private string scene;
     private bool fadingOut;
     private bool fadingIn;
+    private bool goingToNextLevel;
 
     private void Start()
     {
@@ -94,7 +95,7 @@ public class MenuOptions : MonoBehaviour {
     public void LoadLevel(string levelName)
     {
         //Check if there are any new high scores
-        if (PlayerPrefs.GetString("NewSinglePlayerHighScore") == "true" || PlayerPrefs.GetString("NewTwoPlayerHighScore") == "true")
+        if (!goingToNextLevel&&(PlayerPrefs.GetString("NewSinglePlayerHighScore") == "true" || PlayerPrefs.GetString("NewTwoPlayerHighScore") == "true"))
         {
             //If so, Load Leaderboard scene immedietly
             scene = "Leaderboard";
@@ -114,6 +115,7 @@ public class MenuOptions : MonoBehaviour {
     public void SetMusicPref(float value)
     {
         PlayerPrefs.SetFloat("Music", value);
+        PlayerPrefs.Save();
     }
 
     /// <summary>
@@ -123,6 +125,12 @@ public class MenuOptions : MonoBehaviour {
     public void SetSoundPref(float value)
     {
         PlayerPrefs.SetFloat("Sound", value);
+        PlayerPrefs.Save();
+    }
+
+    public void NextLevel()
+    {
+        goingToNextLevel = true;
     }
 
     /// <summary>

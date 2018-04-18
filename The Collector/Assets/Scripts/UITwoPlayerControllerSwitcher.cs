@@ -38,6 +38,8 @@ public class UITwoPlayerControllerSwitcher : MonoBehaviour {
             PlayerPrefs.SetInt("PlayerTwoInputDevice", 1);
             playerOnesUsingKeyboard = true;
         }
+
+        PlayerPrefs.Save();
     }
 
 }

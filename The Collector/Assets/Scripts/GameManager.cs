@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour {
     private GameObject backButton;
 
     private SoundManager soundManager;
+    private int totalItemsCollected;
 
     private void Start()
     {
@@ -109,6 +110,9 @@ public class GameManager : MonoBehaviour {
         {
             gameUI = GameObject.Find("GameUI");
         }
+
+        playerOnePoints = 0;
+        playerTwoPoints = 0;
 
         //Get all gameUI elements 
         playerOnePointsUI = gameUI.transform.GetChild(0).GetChild(0).GetComponent<Text>();
@@ -142,6 +146,10 @@ public class GameManager : MonoBehaviour {
             singlePlayerOrMultiplayerOptions.SetActive(false);
             endGameBackToMenuButton.SetActive(false);
             IsSinglePlayer();
+            if (PlayerPrefs.GetFloat("PlayerOneSessionPoints") != 0)
+            {
+                AddPoints(PlayerPrefs.GetFloat("PlayerOneSessionPoints"), true);
+            }
             StartGame();
         }
         //We're immedietly starting in multiplayer mode
@@ -150,6 +158,16 @@ public class GameManager : MonoBehaviour {
             singlePlayerOrMultiplayerOptions.SetActive(false);
             endGameBackToMenuButton.SetActive(false);
             IsTwoPlayer();
+
+            if (PlayerPrefs.GetFloat("PlayerTwoSessionPoints") != 0)
+            {
+                AddPoints(PlayerPrefs.GetFloat("PlayerTwoSessionPoints"), false);
+            }
+
+            if (PlayerPrefs.GetFloat("PlayerOneSessionPoints") != 0)
+            {
+                AddPoints(PlayerPrefs.GetFloat("PlayerOneSessionPoints"), true);
+            }
             StartGame();
         }
 
@@ -160,7 +178,7 @@ public class GameManager : MonoBehaviour {
         if (GameStart)
         {
             
-            if ((playerOnePoints == numberOfItemsToCollect * 25 && !isTwoPlayer || playerOnePoints+playerTwoPoints == numberOfItemsToCollect * 25)&&numberOfItemsToCollect >0)
+            if (totalItemsCollected == numberOfItemsToCollect && numberOfItemsToCollect != 0)
             {
                 zerotime();  
             }
@@ -330,7 +348,6 @@ public class GameManager : MonoBehaviour {
             //Spawn player two, setting the camera/points appropraitely
             playerTwoInstance = Instantiate(playerTwoPrefab, playerTwoSpawnPoint.position, playerTwoPrefab.transform.rotation);
             playerTwoInstance.transform.GetChild(0).GetComponent<ThirdPersonCamera>().SetPlayerTwoCameraForTwoPlayer();
-            playerTwoPoints = 0;
 
 
             playerOneLivesUI.enabled = true;
@@ -340,7 +357,6 @@ public class GameManager : MonoBehaviour {
             //Spawn player one, setting the camera/points appropraitely
             playerOneInstance = Instantiate(playerOnePrefab, playerOneSpawnPoint.position, playerOnePrefab.transform.rotation);
             playerOneInstance.transform.GetChild(0).GetComponent<ThirdPersonCamera>().SetPlayerOneCameraForTwoPlayer();
-            playerOnePoints = 0;
 
         }
         else
@@ -353,7 +369,6 @@ public class GameManager : MonoBehaviour {
 
             //Spawn player one
             playerOneInstance = Instantiate(playerOnePrefab, playerOneSpawnPoint.position, playerOnePrefab.transform.rotation);
-            playerOnePoints = 0;
 
         }
 
@@ -449,6 +464,8 @@ public class GameManager : MonoBehaviour {
                 }
             }
 
+            //AddUpLives add them to score later
+
             if (playerOneInstance != null)
             {
                 playerOneInstance.GetComponent<Player>().Pause(true);
@@ -464,6 +481,8 @@ public class GameManager : MonoBehaviour {
                 enemyInstances[i].GetComponent<Enemy>().Pause();
             }
 
+            DisableGameUI();
+
             backButton.SetActive(true);
 
             GameStart = false;
@@ -471,7 +490,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void AddPoints(float pointsToAdd, bool playerOnesZone)
+    public void AddPoints(float pointsToAdd, bool playerOnesZone,bool itemCollected=false)
     {
         if (playerOnesZone)
         {
@@ -483,6 +502,11 @@ public class GameManager : MonoBehaviour {
             playerTwoPoints += pointsToAdd;
             playerTwoPointsUI.text = "Points : " + playerTwoPoints;
         }
+
+        if(itemCollected && numberOfItemsToCollect != 0)
+        {
+            totalItemsCollected++;
+        }
     }
 
     private void ShowScore(float winningScore,bool playerOneGotHighScore=false)
@@ -492,11 +516,11 @@ public class GameManager : MonoBehaviour {
 
         if(isTwoPlayer)
         {
-            if (PlayerPrefs.GetFloat("TwoPlayerHighScore",0) < winningScore)
+            if (PlayerPrefs.GetFloat("p1HighscoreOne", 0) < winningScore)
             {
                 PlayerPrefs.SetFloat("TwoPlayerHighScore", winningScore);
 
-                Debug.Log("New highscore for player two leaderboard");
+                Debug.Log("New highscore for player two leaderboard : "+winningScore);
 
                 PlayerPrefs.SetString("NewTwoPlayerHighScore", "true");
 
@@ -514,15 +538,19 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            if (PlayerPrefs.GetFloat("SinglePlayerHighScore",0) < winningScore)
+            if (PlayerPrefs.GetFloat("p1HighscoreOne", 0) < winningScore)
             {
-                Debug.Log("New highscore for player one leaderboard");
+                Debug.Log("New highscore for player one leaderboard : " +winningScore);
 
                 PlayerPrefs.SetFloat("SinglePlayerHighScore", winningScore);
                 PlayerPrefs.SetString("NewSinglePlayerHighScore", "true");
                 PlayerPrefs.Save();
             }
         }
+
+        PlayerPrefs.SetFloat("PlayerOneSessionPoints", playerOnePoints);
+        PlayerPrefs.SetFloat("PlayerTwoSessionPoints", playerTwoPoints);
+        PlayerPrefs.Save();
     }
 
     private void EnableItemBases()
@@ -552,11 +580,27 @@ public class GameManager : MonoBehaviour {
 	{
 		isTwoPlayer = true;
         PlayerPrefs.SetInt("PromptedPlayMode", 2);
+        PlayerPrefs.Save();
     }
 
     public void IsSinglePlayer()
     {
         isTwoPlayer = false;
         PlayerPrefs.SetInt("PromptedPlayMode", 1);
+        PlayerPrefs.Save();
+    }
+
+    void DisableGameUI()
+    {
+        TimeCounterUI.enabled = false;
+
+        playerOnePointsUI.enabled = false;
+        playerOneLivesUI.enabled = false;
+
+        if(isTwoPlayer)
+        {
+            playerTwoLivesUI.enabled = false;
+            playerTwoPointsUI.enabled = false;
+        }
     }
 }

@@ -34,5 +34,7 @@ public class PlayerOneInputSetter : MonoBehaviour {
             PlayerPrefs.SetInt("PlayerOneInputDevice", 1);
             Debug.Log("No External Controller Detected");
         }
+
+        PlayerPrefs.Save();
     }
 }
