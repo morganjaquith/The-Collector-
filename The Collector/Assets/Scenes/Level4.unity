@@ -1063,7 +1063,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 6f8374fe04cbf7542b30675accf36829, type: 2}
+  - {fileID: 2100000, guid: 752c5d850efa3a441b2579220f0ac89b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3467,7 +3467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b12923620eb3254699450950b1b0a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 0}
+  music: {fileID: 8300000, guid: 6e3a8e5046c2d99458a21998091c5dbc, type: 3}
   enemyCount: 6
   enemySpawnPoints:
   - {fileID: 1599221646}
@@ -6641,7 +6641,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 044fecec094ad5b40b3e505844b4d4fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
