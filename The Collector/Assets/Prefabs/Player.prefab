@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 136955769980984864}
   - component: {fileID: 54401781753985692}
   - component: {fileID: 114498031812658024}
-  - component: {fileID: 114715607318541806}
+  - component: {fileID: 82039516502260482}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -235,6 +235,86 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1297105744895322}
   m_Enabled: 0
+--- !u!82 &82039516502260482
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1675534078077644}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114385975743795114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,30 +354,15 @@ MonoBehaviour:
   playerMesh: {fileID: 1983939044504466}
   itemDestination: {fileID: 4123352906663526}
   dontDie: 0
+  throwSound: {fileID: 8300000, guid: 37e82ec0d782f234e91ba6186fb01670, type: 3}
+  deathSound: {fileID: 8300000, guid: 17e5b634614809c42855db79bd5cea30, type: 3}
+  soundSource: {fileID: 82039516502260482}
   dead: 0
   holdingItem: 0
   paused: 0
   isPlayer2: 0
   isNotSinglePlayer: 0
   usingKeyboard: 1
---- !u!114 &114715607318541806
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1675534078077644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdede5eb3fe900a40aa24ec341a0e3f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointValue: 10
-  speed: 2
-  dropTime: 3
-  ownerShip: 0
-  pickedUp: 0
-  justDropped: 0
-  movingItem: 0
 --- !u!124 &124206755148542686
 Behaviour:
   m_ObjectHideFlags: 1

@@ -95,7 +95,7 @@ public class MenuOptions : MonoBehaviour {
     public void LoadLevel(string levelName)
     {
         //Check if there are any new high scores
-        if (!goingToNextLevel&&(PlayerPrefs.GetString("NewSinglePlayerHighScore") == "true" || PlayerPrefs.GetString("NewTwoPlayerHighScore") == "true"))
+        if (!goingToNextLevel&&(PlayerPrefs.GetString("NewSinglePlayerHighScore","false") == "true" || PlayerPrefs.GetString("NewTwoPlayerHighScore", "false") == "true"))
         {
             //If so, Load Leaderboard scene immedietly
             scene = "Leaderboard";

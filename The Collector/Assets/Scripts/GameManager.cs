@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour {
             
             if (totalItemsCollected == numberOfItemsToCollect && numberOfItemsToCollect != 0)
             {
-                zerotime();  
+                ZeroOutTime();  
             }
 
             if (playerOneInstance == null && playerOneLives > 0)
@@ -304,7 +304,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void zerotime()
+    public void ZeroOutTime()
     {
         runtimeGameTime = 0;
     }
@@ -391,6 +391,8 @@ public class GameManager : MonoBehaviour {
                 //If we're in two player mode
                 if (isTwoPlayer)
                 {
+                    TwoPlayerWinTitleUI.enabled = true;
+
                     if (playerOnePoints > playerTwoPoints)
                     {
                         TwoPlayerWinTitleUI.text = "Player One Wins!";
@@ -434,6 +436,8 @@ public class GameManager : MonoBehaviour {
             {
                 if (isTwoPlayer)
                 {
+                    TwoPlayerWinTitleUI.enabled = true;
+
                     if (playerOneLives <= 0)
                     {
                         TwoPlayerWinTitleUI.text = "Player Two Wins!";
@@ -516,7 +520,7 @@ public class GameManager : MonoBehaviour {
 
         if(isTwoPlayer)
         {
-            if (PlayerPrefs.GetFloat("p1HighscoreOne", 0) < winningScore)
+            if (PlayerPrefs.GetFloat("p2HighscoreOne", 0) < winningScore)
             {
                 PlayerPrefs.SetFloat("TwoPlayerHighScore", winningScore);
 

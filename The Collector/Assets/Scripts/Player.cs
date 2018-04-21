@@ -13,6 +13,11 @@ public class Player : MonoBehaviour {
     [Header("Debug Preferences")]
     public bool dontDie;
 
+    [Header("Sound")]
+    public AudioClip throwSound;
+    public AudioClip deathSound;
+    public AudioSource soundSource;
+
     [Header("Debug")]
     public bool dead;
     public bool holdingItem;
@@ -68,7 +73,7 @@ public class Player : MonoBehaviour {
             if (!dead)
             {
                 //If the player is holding and item and left mouse button / "Fire1" is pressed
-                if ((holdingItem && Input.GetButtonDown("Fire1") && usingKeyboard) || (holdingItem && Input.GetButtonDown("ControllerFire1") && !usingKeyboard))
+                if ((holdingItem && Input.GetButtonDown("Fire1") && usingKeyboard) || (holdingItem && Input.GetAxis("ControllerFire1") > 0.1f && !usingKeyboard))
                 {
                     DropItem();
                 }
@@ -154,6 +159,9 @@ public class Player : MonoBehaviour {
     private void DropItem()
     {
 
+        soundSource.clip = throwSound;
+        soundSource.Play();
+
         //Unparent the item from the player
         item.transform.parent = null;
 
@@ -194,24 +202,30 @@ public class Player : MonoBehaviour {
     /// </summary>
     public void ApplyDamage ()
     {
-        //If the dontDie debug variable is false
-        if (!dontDie)
+        if (!dead)
         {
-            //Tell the thirdPersonCamera that the player is dead
-            cameraObject.PlayerIsDead();
-
-            //If we are holding an item currently
-            if(holdingItem)
+            //If the dontDie debug variable is false
+            if (!dontDie)
             {
-                //drop it
-                DropItem();
-            }
-            
-            //Set the rigibody constraints on the player to 'none' so it falls over
-            rig.constraints = RigidbodyConstraints.None;
+                //Tell the thirdPersonCamera that the player is dead
+                cameraObject.PlayerIsDead();
 
-            //Indicate that the player is dead
-            dead = true;
+                //If we are holding an item currently
+                if (holdingItem)
+                {
+                    //drop it
+                    DropItem();
+                }
+
+                //Set the rigibody constraints on the player to 'none' so it falls over
+                rig.constraints = RigidbodyConstraints.None;
+
+                //Indicate that the player is dead
+                dead = true;
+            }
+
+            soundSource.clip = deathSound;
+            soundSource.Play();
         }
     }
 

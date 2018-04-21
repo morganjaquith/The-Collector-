@@ -84,23 +84,23 @@ public class LeaderboardManager : MonoBehaviour {
     {
 
 
-        playerOneHighscoreNameOne = PlayerPrefs.GetString("p1HighscoreOneName", "p1name1");
-        playerOneHighscoreOne = PlayerPrefs.GetFloat("p1HighscoreOne", 0);
+        playerOneHighscoreNameOne = PlayerPrefs.GetString("p1HighscoreOneName", "Ouch");
+        playerOneHighscoreOne = PlayerPrefs.GetFloat("p1HighscoreOne", 100f);
 
-        playerOneHighscoreNameTwo = PlayerPrefs.GetString("p1HighscoreTwoName", "p1name2");
-        playerOneHighscoreTwo = PlayerPrefs.GetFloat("p1HighscoreTwo", 0);
+        playerOneHighscoreNameTwo = PlayerPrefs.GetString("p1HighscoreTwoName", "#OOOF");
+        playerOneHighscoreTwo = PlayerPrefs.GetFloat("p1HighscoreTwo", 50f);
 
-        playerOneHighscoreNameThree = PlayerPrefs.GetString("p1HighscoreThreeName", "p1name3");
-        playerOneHighscoreThree = PlayerPrefs.GetFloat("p1HighscoreThree", 0);
+        playerOneHighscoreNameThree = PlayerPrefs.GetString("p1HighscoreThreeName", "XXXD");
+        playerOneHighscoreThree = PlayerPrefs.GetFloat("p1HighscoreThree", 25f);
 
         playerTwoHighscoreNameOne = PlayerPrefs.GetString("p2HighscoreOneName", "p2name1");
-        playerTwoHighscoreOne = PlayerPrefs.GetFloat("p2HighscoreOne", 0);
+        playerTwoHighscoreOne = PlayerPrefs.GetFloat("p2HighscoreOne", 100f);
 
-        playerTwoHighscoreNameTwo = PlayerPrefs.GetString("p2HighscoreTwoName", "p2name2");
-        playerTwoHighscoreTwo = PlayerPrefs.GetFloat("p2HighscoreTwo", 0);
+        playerTwoHighscoreNameTwo = PlayerPrefs.GetString("p2HighscoreTwoName", "P=NP");
+        playerTwoHighscoreTwo = PlayerPrefs.GetFloat("p2HighscoreTwo", 75f);
 
         playerTwoHighscoreNameThree = PlayerPrefs.GetString("p2HighscoreThreeName", "p2name3");
-        playerTwoHighscoreThree = PlayerPrefs.GetFloat("p2HighscoreThree", 0);
+        playerTwoHighscoreThree = PlayerPrefs.GetFloat("p2HighscoreThree", 25f);
 
         //Check if there are any new high scores
         newSinglePlayerScore = (PlayerPrefs.GetString("NewSinglePlayerHighScore") == "true") ? true : false;

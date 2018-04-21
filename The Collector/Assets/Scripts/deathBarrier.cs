@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class deathBarrier : MonoBehaviour {
+public class DeathBarrier : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject);
+        if(other.transform.tag == "Player")
+        {
+            other.transform.GetComponent<Player>().ApplyDamage();
+        }
     }
 }

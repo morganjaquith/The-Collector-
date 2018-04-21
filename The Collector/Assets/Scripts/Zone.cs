@@ -11,7 +11,6 @@ public class Zone : MonoBehaviour {
     {
         if (other.gameObject.tag == "Item")
         {
-            Destroy(other.gameObject);
             itemObject = other.GetComponent<Item>();
 
             if (itemObject.OwnerShip() == 1 && isPlayerOnesZone)
@@ -21,6 +20,10 @@ public class Zone : MonoBehaviour {
             else if (itemObject.OwnerShip() == 2 && !isPlayerOnesZone)
             {
                 AddPointsToGameManager();
+            }
+            else
+            {
+                //Do nothing
             }
         }
     }
