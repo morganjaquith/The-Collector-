@@ -93,13 +93,13 @@ public class LeaderboardManager : MonoBehaviour {
         playerOneHighscoreNameThree = PlayerPrefs.GetString("p1HighscoreThreeName", "XXXD");
         playerOneHighscoreThree = PlayerPrefs.GetFloat("p1HighscoreThree", 25f);
 
-        playerTwoHighscoreNameOne = PlayerPrefs.GetString("p2HighscoreOneName", "p2name1");
+        playerTwoHighscoreNameOne = PlayerPrefs.GetString("p2HighscoreOneName", "DoggoD");
         playerTwoHighscoreOne = PlayerPrefs.GetFloat("p2HighscoreOne", 100f);
 
         playerTwoHighscoreNameTwo = PlayerPrefs.GetString("p2HighscoreTwoName", "P=NP");
         playerTwoHighscoreTwo = PlayerPrefs.GetFloat("p2HighscoreTwo", 75f);
 
-        playerTwoHighscoreNameThree = PlayerPrefs.GetString("p2HighscoreThreeName", "p2name3");
+        playerTwoHighscoreNameThree = PlayerPrefs.GetString("p2HighscoreThreeName", "what");
         playerTwoHighscoreThree = PlayerPrefs.GetFloat("p2HighscoreThree", 25f);
 
         //Check if there are any new high scores

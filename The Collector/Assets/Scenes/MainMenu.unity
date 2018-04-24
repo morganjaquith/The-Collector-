@@ -1976,6 +1976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e312a1c0280bb478fbc0e1fd537139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetPlayerPrefs: 0
 --- !u!1 &659242418
 GameObject:
   m_ObjectHideFlags: 0

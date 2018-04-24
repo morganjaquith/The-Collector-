@@ -2,8 +2,15 @@
 
 public class PlayerPrefDefaultSetter : MonoBehaviour {
 
+    public bool resetPlayerPrefs;
+
 	// Use this for initialization
 	void Start () {
+
+        if (resetPlayerPrefs)
+        {
+            PlayerPrefs.DeleteAll();
+        }
 
         PlayerPrefs.SetString("NewSinglePlayerHighScore", "false");
         PlayerPrefs.SetString("NewTwoPlayerHighScore","false");
